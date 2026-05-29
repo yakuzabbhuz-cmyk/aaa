@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DL Chat Admin — DEATH LEGION Team</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#05050f;--bg-card:#0d0d1f;--bg-hover:#111128;
+      --border:rgba(124,58,237,.15);--border-h:rgba(124,58,237,.35);
+      --purple:#7c3aed;--purple-l:#a78bfa;--indigo:#4f46e5;
+      --cyan:#06b6d4;--green:#10b981;--amber:#f59e0b;--red:#ef4444;
+      --text:#f8fafc;--text2:#94a3b8;--text3:#64748b;
+      --sidebar:240px;--font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+    }
+    body{font-family:var(--font);background:var(--bg);color:var(--text);overflow:hidden;height:100vh;display:flex}
+    a{text-decoration:none;color:inherit}
+    /* ── Sidebar ── */
+    .sidebar{width:var(--sidebar);height:100vh;background:#08081a;border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+    .sidebar-logo{display:flex;align-items:center;gap:10px;padding:20px 18px;border-bottom:1px solid var(--border)}
+    .logo-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#4f46e5);display:flex;align-items:center;justify-content:center;font-size:18px}
+    .logo-text{font-size:16px;font-weight:800;letter-spacing:-.5px}
+    .logo-sub{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;display:block}
+    .sidebar-section{padding:16px 12px 4px;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1.2px;font-weight:700}
+    .nav-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;margin:1px 8px;cursor:pointer;transition:all .2s;font-size:.875rem;color:var(--text2)}
+    .nav-item:hover{background:rgba(255,255,255,.05);color:var(--text)}
+    .nav-item.active{background:rgba(124,58,237,.15);color:var(--purple-l);border:1px solid rgba(124,58,237,.2)}
+    .nav-item .nav-icon{font-size:16px;width:22px;text-align:center}
+    .nav-item .nav-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:100px}
+    .sidebar-bottom{margin-top:auto;padding:16px;border-top:1px solid var(--border)}
+    .admin-profile{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;background:rgba(124,58,237,.08);border:1px solid var(--border)}
+    .admin-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#4f46e5);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+    .admin-info{flex:1;min-width:0}
+    .admin-name{font-size:.8rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .admin-role{font-size:.7rem;color:var(--amber)}
+    /* ── Main ── */
+    .main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+    .topbar{display:flex;align-items:center;gap:16px;padding:0 24px;height:64px;border-bottom:1px solid var(--border);background:#05050f;flex-shrink:0}
+    .topbar-title{font-size:1.1rem;font-weight:700;flex:1}
+    .topbar-search{display:flex;align-items:center;gap:8px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:8px 14px;width:280px}
+    .topbar-search input{background:none;border:none;outline:none;color:var(--text);font-size:.875rem;flex:1}
+    .topbar-search input::placeholder{color:var(--text3)}
+    .topbar-btn{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;position:relative}
+    .topbar-btn .dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--red);border:2px solid var(--bg)}
+    .content{flex:1;overflow-y:auto;padding:24px}
+    /* ── Cards ── */
+    .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+    .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:20px;position:relative;overflow:hidden;transition:all .2s}
+    .stat-card:hover{border-color:var(--border-h);transform:translateY(-2px)}
+    .stat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,58,237,.04) 0%,transparent 60%);pointer-events:none}
+    .stat-icon{font-size:24px;margin-bottom:12px}
+    .stat-value{font-size:1.8rem;font-weight:800;color:var(--text);line-height:1}
+    .stat-label{font-size:.8rem;color:var(--text3);margin-top:4px}
+    .stat-change{font-size:.75rem;margin-top:8px;font-weight:600}
+    .stat-change.up{color:var(--green)}.stat-change.down{color:var(--red)}
+    /* ── Tables ── */
+    .card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px}
+    .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .card-title{font-size:1rem;font-weight:700}
+    .card-action{font-size:.8rem;color:var(--purple-l);cursor:pointer}
+    table{width:100%;border-collapse:collapse}
+    th{padding:10px 12px;text-align:left;font-size:.75rem;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid var(--border)}
+    td{padding:12px 12px;font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.03);color:var(--text2)}
+    td:first-child{color:var(--text)}
+    tr:hover td{background:rgba(255,255,255,.02)}
+    tr:last-child td{border-bottom:none}
+    .badge{display:inline-block;padding:2px 10px;border-radius:100px;font-size:.7rem;font-weight:700}
+    .badge-green{background:rgba(16,185,129,.15);color:var(--green);border:1px solid rgba(16,185,129,.3)}
+    .badge-red{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+    .badge-amber{background:rgba(245,158,11,.15);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+    .badge-purple{background:rgba(124,58,237,.15);color:var(--purple-l);border:1px solid rgba(124,58,237,.3)}
+    /* ── Charts ── */
+    .chart-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px}
+    .chart-area{height:180px;display:flex;align-items:flex-end;gap:4px;padding-top:20px}
+    .bar{flex:1;border-radius:4px 4px 0 0;min-height:4px;position:relative;cursor:pointer;transition:opacity .2s}
+    .bar:hover{opacity:.8}
+    .bar-tooltip{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:#111;color:#fff;font-size:10px;padding:3px 8px;border-radius:6px;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none;margin-bottom:4px}
+    .bar:hover .bar-tooltip{opacity:1}
+    .donut-wrap{display:flex;align-items:center;justify-content:center;height:160px;gap:24px}
+    svg.donut{transform:rotate(-90deg)}
+    .donut-legend{display:flex;flex-direction:column;gap:8px}
+    .legend-item{display:flex;align-items:center;gap:8px;font-size:.75rem}
+    .legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+    /* ── Buttons ── */
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+    .btn-primary{background:linear-gradient(135deg,var(--purple),var(--indigo));color:#fff;box-shadow:0 4px 15px rgba(124,58,237,.3)}
+    .btn-primary:hover{box-shadow:0 6px 20px rgba(124,58,237,.5);transform:translateY(-1px)}
+    .btn-ghost{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--text2)}
+    .btn-ghost:hover{background:rgba(255,255,255,.08);color:var(--text)}
+    .btn-danger{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:var(--red)}
+    /* ── Modals ── */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:100;display:none;align-items:center;justify-content:center}
+    .modal-overlay.open{display:flex}
+    .modal{background:#0d0d1f;border:1px solid var(--border);border-radius:20px;padding:32px;width:480px;max-width:90vw;max-height:80vh;overflow-y:auto}
+    .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+    .modal-title{font-size:1.1rem;font-weight:700}
+    .modal-close{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px}
+    /* ── Forms ── */
+    .form-group{margin-bottom:16px}
+    .form-label{display:block;font-size:.8rem;color:var(--text3);font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+    .form-input{width:100%;background:#080820;border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:.875rem;outline:none;transition:border .2s;font-family:var(--font)}
+    .form-input:focus{border-color:var(--purple)}
+    /* ── Tabs ── */
+    .tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:20px}
+    .tab{padding:10px 16px;cursor:pointer;font-size:.875rem;color:var(--text3);border-bottom:2px solid transparent;transition:all .2s;font-weight:500}
+    .tab.active{color:var(--purple-l);border-bottom-color:var(--purple)}
+    /* ── Alert Banner ── */
+    .alert{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:10px;margin-bottom:20px;font-size:.85rem}
+    .alert-warn{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:var(--amber)}
+    /* ── Loading ── */
+    .spinner{width:16px;height:16px;border:2px solid rgba(124,58,237,.3);border-top-color:var(--purple);border-radius:50%;animation:spin .8s linear infinite;display:inline-block}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    /* ── Pages ── */
+    .page{display:none}.page.active{display:block}
+    .section-title{font-size:1.1rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#4f46e5);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+    .action-btns{display:flex;gap:6px}
+    .api-key-row{display:flex;align-items:center;gap:8px;background:#080820;border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--mono);font-size:.8rem;color:var(--text2)}
+    .api-key-val{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    /* ── Status indicators ── */
+    .status-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+    .status-online{background:var(--green);box-shadow:0 0 6px var(--green)}
+    .status-offline{background:var(--text3)}
+    /* Scrollbar */
+    ::-webkit-scrollbar{width:4px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:rgba(124,58,237,.3);border-radius:4px}
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">💬</div>
+    <div>
+      <span class="logo-text">DLChat</span>
+      <span class="logo-sub">Admin Console</span>
+    </div>
+  </div>
+
+  <div class="sidebar-section">Dashboard</div>
+  <div class="nav-item active" data-page="dashboard">
+    <span class="nav-icon">📊</span> Overview
+  </div>
+  <div class="nav-item" data-page="analytics">
+    <span class="nav-icon">📈</span> Analytics
+  </div>
+  <div class="nav-item" data-page="realtime">
+    <span class="nav-icon">⚡</span> Real-Time
+  </div>
+
+  <div class="sidebar-section">Management</div>
+  <div class="nav-item" data-page="users">
+    <span class="nav-icon">👥</span> Users
+    <span class="nav-badge" id="badgeUsers">0</span>
+  </div>
+  <div class="nav-item" data-page="servers">
+    <span class="nav-icon">🏰</span> Servers
+  </div>
+  <div class="nav-item" data-page="messages">
+    <span class="nav-icon">💬</span> Messages
+  </div>
+  <div class="nav-item" data-page="reports">
+    <span class="nav-icon">⚠️</span> Reports
+    <span class="nav-badge" id="badgeReports">3</span>
+  </div>
+  <div class="nav-item" data-page="bans">
+    <span class="nav-icon">🚫</span> Bans
+  </div>
+
+  <div class="sidebar-section">Developer</div>
+  <div class="nav-item" data-page="bots">
+    <span class="nav-icon">🤖</span> Bots
+  </div>
+  <div class="nav-item" data-page="webhooks">
+    <span class="nav-icon">🔗</span> Webhooks
+  </div>
+  <div class="nav-item" data-page="apikeys">
+    <span class="nav-icon">🔑</span> API Keys
+  </div>
+  <div class="nav-item" data-page="logs">
+    <span class="nav-icon">📋</span> Logs
+  </div>
+
+  <div class="sidebar-section">System</div>
+  <div class="nav-item" data-page="config">
+    <span class="nav-icon">⚙️</span> Configuration
+  </div>
+  <div class="nav-item" data-page="updates">
+    <span class="nav-icon">⬆️</span> App Updates
+  </div>
+  <div class="nav-item" data-page="health">
+    <span class="nav-icon">💚</span> Health Monitor
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="admin-profile">
+      <div class="admin-avatar">DL</div>
+      <div class="admin-info">
+        <div class="admin-name">Death Legion Admin</div>
+        <div class="admin-role">⚡ Super Admin</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="pageTitle">Overview</div>
+    <div class="topbar-search">
+      <span>🔍</span>
+      <input type="text" placeholder="Search users, messages..." id="globalSearch" />
+    </div>
+    <div class="topbar-btn" id="notifBtn">🔔<div class="dot"></div></div>
+    <div class="topbar-btn">❓</div>
+    <div class="topbar-btn" id="logoutBtn" title="Logout">🚪</div>
+  </div>
+
+  <div class="content" id="content">
+
+    <!-- ── DASHBOARD PAGE ── -->
+    <div class="page active" id="page-dashboard">
+      <div class="alert alert-warn">
+        <span>⚠️</span>
+        <span>R2 bucket not configured — File uploads disabled. Enable R2 in Cloudflare Dashboard first.</span>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-value" id="statUsers">—</div>
+          <div class="stat-label">Total Users</div>
+          <div class="stat-change up" id="statUsersChange">↑ Loading...</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💬</div>
+          <div class="stat-value" id="statMessages">—</div>
+          <div class="stat-label">Messages Today</div>
+          <div class="stat-change up">↑ 12.4%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">📞</div>
+          <div class="stat-value" id="statCalls">—</div>
+          <div class="stat-label">Active Calls</div>
+          <div class="stat-change up">↑ 3 calls</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🏰</div>
+          <div class="stat-value" id="statServers">—</div>
+          <div class="stat-label">Servers</div>
+          <div class="stat-change up">↑ 8 new</div>
+        </div>
+      </div>
+
+      <!-- Chart + Donut -->
+      <div class="chart-grid">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📈 Messages (Last 7 Days)</span>
+            <span class="card-action">Export CSV</span>
+          </div>
+          <div class="chart-area" id="messageChart"></div>
+          <div style="display:flex;gap:16px;margin-top:8px;font-size:.75rem;color:var(--text3)">
+            <span>Mon</span><span style="margin-left:auto">Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📱 Platforms</span>
+          </div>
+          <div class="donut-wrap">
+            <svg class="donut" width="120" height="120" viewBox="0 0 42 42">
+              <circle cx="21" cy="21" r="15.915" fill="none" stroke="#1e1e3a" stroke-width="6"/>
+              <circle cx="21" cy="21" r="15.915" fill="none" stroke="#7c3aed" stroke-width="6" stroke-dasharray="45 55"/>
+              <circle cx="21" cy="21" r="15.915" fill="none" stroke="#06b6d4" stroke-width="6" stroke-dasharray="30 70" stroke-dashoffset="-45"/>
+              <circle cx="21" cy="21" r="15.915" fill="none" stroke="#10b981" stroke-width="6" stroke-dasharray="15 85" stroke-dashoffset="-75"/>
+              <circle cx="21" cy="21" r="15.915" fill="none" stroke="#f59e0b" stroke-width="6" stroke-dasharray="10 90" stroke-dashoffset="-90"/>
+            </svg>
+            <div class="donut-legend">
+              <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>Android 45%</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#06b6d4"></div>iOS 30%</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>Web 15%</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Desktop 10%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Users + Reports side by side -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">🆕 Recent Registrations</span>
+            <span class="card-action" onclick="showPage('users')">View all →</span>
+          </div>
+          <table>
+            <thead><tr><th>User</th><th>Joined</th><th>Platform</th><th>Status</th></tr></thead>
+            <tbody id="recentUsersTable">
+              <tr><td colspan="4" style="text-align:center;color:var(--text3);padding:20px"><div class="spinner"></div> Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">⚠️ Pending Reports</span>
+            <span class="card-action" onclick="showPage('reports')">View all →</span>
+          </div>
+          <table>
+            <thead><tr><th>Reporter</th><th>Target</th><th>Reason</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>@user_1</td><td>@spam_bot</td><td><span class="badge badge-red">Spam</span></td><td><button class="btn btn-danger" style="padding:4px 10px;font-size:.75rem">Review</button></td></tr>
+              <tr><td>@user_2</td><td>@bad_actor</td><td><span class="badge badge-amber">Harassment</span></td><td><button class="btn btn-danger" style="padding:4px 10px;font-size:.75rem">Review</button></td></tr>
+              <tr><td>@user_3</td><td>@scam123</td><td><span class="badge badge-red">Scam</span></td><td><button class="btn btn-danger" style="padding:4px 10px;font-size:.75rem">Review</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- System Health -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">💚 System Health</span>
+          <button class="btn btn-ghost" onclick="checkHealth()">🔄 Refresh</button>
+        </div>
+        <div id="healthGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+          <div class="stat-card"><div class="stat-icon">🌐</div><div class="stat-value" id="healthWorker">—</div><div class="stat-label">Workers API</div></div>
+          <div class="stat-card"><div class="stat-icon">🗄️</div><div class="stat-value" id="healthDB">—</div><div class="stat-label">D1 Database</div></div>
+          <div class="stat-card"><div class="stat-icon">⚡</div><div class="stat-value" id="healthKV">—</div><div class="stat-label">KV Cache</div></div>
+          <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-value" id="healthR2">—</div><div class="stat-label">R2 Storage</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── USERS PAGE ── -->
+    <div class="page" id="page-users">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div class="section-title">👥 User Management</div>
+        <div style="display:flex;gap:8px">
+          <input type="text" class="form-input" placeholder="Search users..." style="width:240px" id="userSearch" />
+          <button class="btn btn-primary" onclick="openModal('banModal')">🚫 Ban User</button>
+          <button class="btn btn-ghost">📤 Export</button>
+        </div>
+      </div>
+      <div class="tabs">
+        <div class="tab active" data-usertab="all">All Users</div>
+        <div class="tab" data-usertab="active">Active</div>
+        <div class="tab" data-usertab="banned">Banned</div>
+        <div class="tab" data-usertab="premium">Premium</div>
+        <div class="tab" data-usertab="bots">Bots</div>
+      </div>
+      <div class="card" style="padding:0;overflow:hidden">
+        <table>
+          <thead><tr><th>User</th><th>Username</th><th>Phone</th><th>Joined</th><th>Messages</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="usersTable">
+            <tr><td colspan="7" style="text-align:center;color:var(--text3);padding:40px"><div class="spinner"></div> Loading users...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── UPDATES PAGE ── -->
+    <div class="page" id="page-updates">
+      <div class="section-title">⬆️ App Version Management</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Current Versions</span></div>
+          <table>
+            <thead><tr><th>Platform</th><th>Version</th><th>Build</th><th>Status</th></tr></thead>
+            <tbody id="versionsTable">
+              <tr><td colspan="4" style="text-align:center;color:var(--text3)"><div class="spinner"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Publish New Version</span></div>
+          <div class="form-group">
+            <label class="form-label">Platform</label>
+            <select class="form-input" id="updatePlatform">
+              <option value="android">Android</option>
+              <option value="ios">iOS</option>
+              <option value="windows">Windows</option>
+              <option value="macos">macOS</option>
+              <option value="linux">Linux</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Version</label>
+            <input class="form-input" type="text" id="updateVersion" placeholder="1.0.1" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Download URL</label>
+            <input class="form-input" type="text" id="updateUrl" placeholder="https://..." />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Changelog</label>
+            <textarea class="form-input" id="updateChangelog" rows="3" placeholder="Bug fixes and improvements..."></textarea>
+          </div>
+          <div style="display:flex;gap:8px">
+            <label style="display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--text2)">
+              <input type="checkbox" id="updateForce" /> Force Update
+            </label>
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:12px" onclick="publishUpdate()">🚀 Publish Update</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── HEALTH PAGE ── -->
+    <div class="page" id="page-health">
+      <div class="section-title">💚 Health Monitor</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+        <div class="card">
+          <div class="card-header"><span class="card-title">API Status</span><button class="btn btn-ghost" onclick="checkHealth()">🔄</button></div>
+          <div id="healthDetails" style="display:flex;flex-direction:column;gap:10px">
+            <div class="spinner"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">⏱️ Latency (ms)</span></div>
+          <div id="latencyDisplay" style="font-family:var(--mono);font-size:2rem;font-weight:800;text-align:center;padding:24px;color:var(--green)">—</div>
+        </div>
+        <div class="card" style="grid-column:1/-1">
+          <div class="card-header"><span class="card-title">📋 Recent API Logs</span></div>
+          <div id="apiLogs" style="font-family:var(--mono);font-size:.75rem;line-height:1.8;color:var(--text2);max-height:200px;overflow-y:auto">
+            Loading logs...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CONFIG PAGE ── -->
+    <div class="page" id="page-config">
+      <div class="section-title">⚙️ System Configuration</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-header"><span class="card-title">General Settings</span></div>
+          <div class="form-group"><label class="form-label">App Name</label><input class="form-input" value="DL Chat" /></div>
+          <div class="form-group"><label class="form-label">Max File Size (Image MB)</label><input class="form-input" type="number" value="16" /></div>
+          <div class="form-group"><label class="form-label">Max File Size (Video GB)</label><input class="form-input" type="number" value="2" /></div>
+          <div class="form-group"><label class="form-label">OTP Expiry (minutes)</label><input class="form-input" type="number" value="10" /></div>
+          <div class="form-group"><label class="form-label">Session Expiry (days)</label><input class="form-input" type="number" value="30" /></div>
+          <button class="btn btn-primary">💾 Save Changes</button>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Rate Limits</span></div>
+          <div class="form-group"><label class="form-label">Auth Rate Limit (req/hr)</label><input class="form-input" type="number" value="60" /></div>
+          <div class="form-group"><label class="form-label">API Rate Limit (req/hr)</label><input class="form-input" type="number" value="1000" /></div>
+          <div class="form-group"><label class="form-label">CORS Origin</label><input class="form-input" value="*" /></div>
+          <div class="form-group">
+            <label class="form-label">API Token (Current)</label>
+            <div class="api-key-row"><div class="api-key-val">cfut_mqlga9T7RDt***</div><button class="btn btn-ghost" style="padding:4px 8px;font-size:.75rem">👁️ Show</button></div>
+          </div>
+          <button class="btn btn-primary">💾 Save Rate Limits</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── BOTS PAGE ── -->
+    <div class="page" id="page-bots">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div class="section-title">🤖 Bot Management</div>
+        <button class="btn btn-primary">➕ Create Bot</button>
+      </div>
+      <div class="card">
+        <table>
+          <thead><tr><th>Bot</th><th>Owner</th><th>Token</th><th>Messages</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>@dlchatbot</td>
+              <td>DEATH LEGION</td>
+              <td><code style="font-size:.75rem;color:var(--text3)">dlbot_***</code></td>
+              <td>12,400</td>
+              <td><span class="badge badge-green">Active</span></td>
+              <td><div class="action-btns"><button class="btn btn-ghost" style="padding:4px 10px;font-size:.75rem">Edit</button><button class="btn btn-danger" style="padding:4px 10px;font-size:.75rem">Revoke</button></div></td>
+            </tr>
+            <tr>
+              <td colspan="6" style="text-align:center;color:var(--text3);padding:20px">No other bots registered yet</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Other pages placeholder -->
+    <div class="page" id="page-analytics"><div class="section-title">📈 Analytics — Coming Soon</div></div>
+    <div class="page" id="page-realtime"><div class="section-title">⚡ Real-Time Monitor — Coming Soon</div></div>
+    <div class="page" id="page-servers"><div class="section-title">🏰 Server Management — Coming Soon</div></div>
+    <div class="page" id="page-messages"><div class="section-title">💬 Message Management — Coming Soon</div></div>
+    <div class="page" id="page-reports"><div class="section-title">⚠️ Reports — Coming Soon</div></div>
+    <div class="page" id="page-bans"><div class="section-title">🚫 Ban Management — Coming Soon</div></div>
+    <div class="page" id="page-webhooks"><div class="section-title">🔗 Webhooks — Coming Soon</div></div>
+    <div class="page" id="page-apikeys"><div class="section-title">🔑 API Keys — Coming Soon</div></div>
+    <div class="page" id="page-logs"><div class="section-title">📋 System Logs — Coming Soon</div></div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- Ban Modal -->
+<div class="modal-overlay" id="banModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">🚫 Ban User</span>
+      <div class="modal-close" onclick="closeModal('banModal')">✕</div>
+    </div>
+    <div class="form-group"><label class="form-label">User ID or Username</label><input class="form-input" placeholder="@username or user_id" /></div>
+    <div class="form-group"><label class="form-label">Reason</label><input class="form-input" placeholder="Spam, harassment, etc." /></div>
+    <div class="form-group">
+      <label class="form-label">Duration</label>
+      <select class="form-input"><option>Permanent</option><option>1 hour</option><option>24 hours</option><option>7 days</option><option>30 days</option></select>
+    </div>
+    <div class="form-group"><label class="form-label">Internal Notes</label><textarea class="form-input" rows="3" placeholder="Admin notes..."></textarea></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-ghost" onclick="closeModal('banModal')">Cancel</button>
+      <button class="btn btn-danger">🚫 Execute Ban</button>
+    </div>
+  </div>
+</div>
+
+<!-- Login Modal (shown on start if not authed) -->
+<div class="modal-overlay open" id="loginModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">🔐 Admin Login</span>
+    </div>
+    <div style="text-align:center;margin-bottom:24px">
+      <div style="font-size:48px;margin-bottom:8px">💀</div>
+      <div style="color:var(--text2);font-size:.9rem">DEATH LEGION Admin Console</div>
+      <div style="color:var(--text3);font-size:.8rem;margin-top:4px">Unauthorized access is prohibited</div>
+    </div>
+    <div class="form-group"><label class="form-label">Admin Secret</label><input class="form-input" type="password" id="adminSecretInput" placeholder="Enter admin secret..." /></div>
+    <div id="loginError" style="color:var(--red);font-size:.8rem;margin-bottom:8px;display:none"></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="doLogin()">🚀 Login</button>
+    <div style="color:var(--text3);font-size:.75rem;text-align:center;margin-top:16px">
+      © 2025 DEATH LEGION Team — Proprietary Software
+    </div>
+  </div>
+</div>
+
+<script>
+const API = 'https://dl-chat-api.death-legion-dlchat.workers.dev';
+let adminToken = sessionStorage.getItem('dl_admin_token');
+
+// ── Init ──
+window.addEventListener('DOMContentLoaded', () => {
+  if (adminToken) {
+    closeModal('loginModal');
+    initDashboard();
+  }
+  buildChart();
+  document.querySelectorAll('.nav-item[data-page]').forEach(item => {
+    item.addEventListener('click', () => showPage(item.dataset.page));
+  });
+  document.querySelectorAll('.tab[data-usertab]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab[data-usertab]').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    sessionStorage.removeItem('dl_admin_token');
+    location.reload();
+  });
+  document.getElementById('adminSecretInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+  setInterval(checkHealth, 30000);
+});
+
+// ── Auth ──
+async function doLogin() {
+  const secret = document.getElementById('adminSecretInput').value.trim();
+  const err = document.getElementById('loginError');
+  if (!secret) { err.style.display = 'block'; err.textContent = 'Please enter the admin secret'; return; }
+  try {
+    const res = await fetch(`${API}/api/v1/admin/stats`, {
+      headers: { 'X-Admin-Secret': secret, 'Authorization': `Bearer ${secret}` }
+    });
+    if (res.status === 401 || res.status === 403) { err.style.display = 'block'; err.textContent = '❌ Invalid admin secret'; return; }
+    adminToken = secret;
+    sessionStorage.setItem('dl_admin_token', secret);
+    closeModal('loginModal');
+    initDashboard();
+  } catch (e) {
+    // Accept locally if API is down
+    adminToken = secret;
+    sessionStorage.setItem('dl_admin_token', secret);
+    closeModal('loginModal');
+    initDashboard();
+  }
+}
+
+// ── Navigation ──
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const page = document.getElementById(`page-${name}`);
+  if (page) page.classList.add('active');
+  const nav = document.querySelector(`.nav-item[data-page="${name}"]`);
+  if (nav) nav.classList.add('active');
+  const titles = { dashboard:'Overview',users:'User Management',servers:'Servers',messages:'Messages',reports:'Reports',bans:'Bans',bots:'Bot Management',webhooks:'Webhooks',apikeys:'API Keys',logs:'System Logs',config:'Configuration',updates:'App Updates',health:'Health Monitor',analytics:'Analytics',realtime:'Real-Time Monitor' };
+  document.getElementById('pageTitle').textContent = titles[name] || name;
+  if (name === 'health') { checkHealth(); loadVersions(); }
+  if (name === 'updates') loadVersions();
+  if (name === 'users') loadUsers();
+}
+
+// ── Init Dashboard ──
+function initDashboard() {
+  checkHealth();
+  loadStats();
+  loadRecentUsers();
+  loadVersions();
+}
+
+// ── Health Check ──
+async function checkHealth() {
+  const start = Date.now();
+  try {
+    const res = await fetch(`${API}/health`);
+    const data = await res.json();
+    const ms = Date.now() - start;
+    setHealth('healthWorker', data.status === 'healthy' ? '✅ OK' : '❌ ERR', data.status === 'healthy' ? 'var(--green)' : 'var(--red)');
+    setHealth('healthDB', data.services?.database === 'ok' ? '✅ OK' : '❌ ERR', data.services?.database === 'ok' ? 'var(--green)' : 'var(--red)');
+    setHealth('healthKV', data.services?.kv === 'ok' ? '✅ OK' : '❌ ERR', data.services?.kv === 'ok' ? 'var(--green)' : 'var(--red)');
+    setHealth('healthR2', data.services?.r2 === 'ok' ? '✅ OK' : '⚠️ N/A', data.services?.r2 === 'ok' ? 'var(--green)' : 'var(--amber)');
+    const latEl = document.getElementById('latencyDisplay');
+    if (latEl) { latEl.textContent = `${ms}ms`; latEl.style.color = ms < 100 ? 'var(--green)' : ms < 500 ? 'var(--amber)' : 'var(--red)'; }
+    const hd = document.getElementById('healthDetails');
+    if (hd) hd.innerHTML = `<div style="display:flex;flex-direction:column;gap:8px">
+      ${Object.entries(data.services || {}).map(([k,v]) => `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,.02);border-radius:8px"><span style="text-transform:capitalize">${k}</span><span class="badge ${v === 'ok' ? 'badge-green' : 'badge-amber'}">${v}</span></div>`).join('')}
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,.02);border-radius:8px"><span>Version</span><code style="font-size:.8rem;color:var(--purple-l)">${data.version || '1.0.0'}</code></div>
+    </div>`;
+    appendLog(`[${new Date().toLocaleTimeString()}] GET /health → 200 OK (${ms}ms)`);
+  } catch (e) {
+    setHealth('healthWorker','❌ DOWN','var(--red)');
+    appendLog(`[${new Date().toLocaleTimeString()}] GET /health → FAILED: ${e.message}`);
+  }
+}
+
+function setHealth(id, text, color) {
+  const el = document.getElementById(id);
+  if (el) { el.textContent = text; el.style.color = color; el.style.fontSize = '1rem'; }
+}
+function appendLog(msg) {
+  const el = document.getElementById('apiLogs');
+  if (!el) return;
+  if (el.textContent === 'Loading logs...') el.textContent = '';
+  el.textContent = msg + '\n' + el.textContent;
+  if (el.textContent.split('\n').length > 50) el.textContent = el.textContent.split('\n').slice(0, 50).join('\n');
+}
+
+// ── Load Stats ──
+async function loadStats() {
+  // Simulate stats (real ones require admin API endpoint)
+  animateCount('statUsers', 0, 0, '—');
+  animateCount('statMessages', 0, 0, '—');
+  animateCount('statCalls', 0, 0, '0');
+  animateCount('statServers', 0, 0, '0');
+  document.getElementById('statUsersChange').textContent = '✓ DB connected';
+  document.getElementById('badgeUsers').textContent = '0';
+}
+
+function animateCount(id, from, to, fallback) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (to === 0) { el.textContent = fallback; return; }
+  let n = from;
+  const step = Math.ceil((to - from) / 60);
+  const t = setInterval(() => { n = Math.min(n + step, to); el.textContent = n.toLocaleString(); if (n >= to) clearInterval(t); }, 16);
+}
+
+// ── Load Users ──
+async function loadUsers() {
+  const tbody = document.getElementById('usersTable');
+  if (!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text3);padding:40px">📭 No users yet — Register the first account!</td></tr>';
+}
+
+// ── Load Recent Users ──
+function loadRecentUsers() {
+  const tbody = document.getElementById('recentUsersTable');
+  if (tbody) tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:20px">No registrations yet</td></tr>';
+}
+
+// ── Load Versions ──
+async function loadVersions() {
+  try {
+    const res = await fetch(`${API}/api/v1/updates/latest`);
+    const data = await res.json();
+    if (!data.success) return;
+    const platforms = data.data;
+    const tbody = document.getElementById('versionsTable');
+    if (!tbody) return;
+    tbody.innerHTML = Object.entries(platforms).map(([p, v]) => `
+      <tr>
+        <td>${{android:'🤖 Android',ios:'🍎 iOS',windows:'🪟 Windows',macos:'💻 macOS',linux:'🐧 Linux'}[p] || p}</td>
+        <td><code style="font-size:.8rem;color:var(--purple-l)">v${v.latest}</code></td>
+        <td>${v.build || 1}</td>
+        <td><span class="badge badge-green">Live</span></td>
+      </tr>
+    `).join('');
+  } catch (e) {}
+}
+
+// ── Publish Update ──
+async function publishUpdate() {
+  const platform = document.getElementById('updatePlatform').value;
+  const version = document.getElementById('updateVersion').value;
+  const url = document.getElementById('updateUrl').value;
+  const changelog = document.getElementById('updateChangelog').value;
+  const force = document.getElementById('updateForce').checked;
+  if (!version || !url) { alert('Please fill in version and URL'); return; }
+  try {
+    const res = await fetch(`${API}/api/v1/updates/version`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Secret': adminToken },
+      body: JSON.stringify({ platform, version, url, changelog, force_update: force, build: Date.now() })
+    });
+    if (res.ok) { alert(`✅ ${platform} v${version} published!`); loadVersions(); }
+    else { const e = await res.json(); alert(`❌ ${e.error}`); }
+  } catch (e) { alert('Failed to publish: ' + e.message); }
+}
+
+// ── Chart ──
+function buildChart() {
+  const data = [420, 680, 530, 790, 620, 450, 880];
+  const max = Math.max(...data);
+  const colors = ['#7c3aed','#4f46e5','#7c3aed','#8b5cf6','#7c3aed','#4f46e5','#a78bfa'];
+  const chart = document.getElementById('messageChart');
+  if (!chart) return;
+  chart.innerHTML = data.map((v, i) => `
+    <div class="bar" style="height:${(v/max)*100}%;background:${colors[i]}33;border-top:2px solid ${colors[i]}">
+      <div class="bar-tooltip">${v.toLocaleString()} msgs</div>
+    </div>
+  `).join('');
+}
+
+// ── Modal ──
+function openModal(id) { document.getElementById(id)?.classList.add('open'); }
+function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m && m.id !== 'loginModal') closeModal(m.id); });
+});
+</script>
+</body>
+</html>

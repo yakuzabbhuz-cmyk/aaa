@@ -1,0 +1,42 @@
+appId: com.deathlegion.dlchat
+productName: DL Chat
+copyright: Copyright © 2025 DEATH LEGION Team. All Rights Reserved.
+
+directories:
+  output: dist-win
+  buildResources: assets
+
+files:
+  - out/DL Chat-linux-x64/**/*
+
+win:
+  target:
+    - target: portable
+      arch: [x64]
+    - target: nsis
+      arch: [x64]
+  icon: assets/icon.png
+  executableName: DLChat
+  publisherName: DEATH LEGION Team
+  fileAssociations:
+    - ext: dlchat
+      name: DL Chat File
+      role: Editor
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  installerIcon: assets/icon.png
+  uninstallerIcon: assets/icon.png
+  installerHeader: assets/icon.png
+  installerSidebar: assets/icon.png
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: DL Chat
+  include: installer.nsh
+  runAfterFinish: true
+  menuCategory: DEATH LEGION
+  artifactName: DLChat-Setup-${version}-x64.exe
+
+portable:
+  artifactName: DLChat-Portable-${version}-x64.exe

@@ -1,0 +1,14 @@
+{
+  "name": "@dl-chat/download",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DL Chat download/landing page",
+  "scripts": {
+    "dev": "vite --port 4000 --open",
+    "build": "vite build",
+    "preview": "vite preview --port 4000"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

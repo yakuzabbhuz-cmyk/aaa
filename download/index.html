@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="DL Chat — The securest messaging platform by DEATH LEGION Team. WhatsApp + Telegram + Discord, combined. E2E encrypted. Available on Android, iOS, Windows, macOS, Linux & Web." />
+  <meta name="keywords" content="DL Chat, messaging app, secure chat, end-to-end encryption, DEATH LEGION, voice calls, video calls, file sharing" />
+  <meta property="og:title" content="DL Chat — Secure Messaging by DEATH LEGION Team" />
+  <meta property="og:description" content="The most secure messaging platform ever built. WhatsApp + Telegram + Discord combined." />
+  <meta property="og:image" content="https://dl-chat-download.pages.dev/og-image.png" />
+  <meta property="og:url" content="https://dl-chat-download.pages.dev" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>DL Chat — The Securest Messaging App | DEATH LEGION Team</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%237c3aed'/><text x='8' y='23' font-size='18' fill='white'>💬</text></svg>" />
+  <link rel="stylesheet" href="src/style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════ CURSOR GLOW ═══════════════════ -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="#" class="nav-logo">
+      <div class="logo-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="8" fill="url(#lg)"/><path d="M7 10h14M7 14h10M7 18h8" stroke="white" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="lg" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#4f46e5"/></linearGradient></defs></svg>
+      </div>
+      <span class="logo-text">DL<span class="logo-accent">Chat</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#security">Security</a></li>
+      <li><a href="#platforms">Platforms</a></li>
+      <li><a href="#comparison">Compare</a></li>
+      <li><a href="#bots">Bot API</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#download" class="nav-cta">Download</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+    <div class="grid-overlay"></div>
+    <canvas id="particleCanvas"></canvas>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-badge" data-animate="fadeInDown">
+      <span class="badge-dot"></span>
+      <span>Powered by Cloudflare Edge Network</span>
+      <span class="badge-version" id="heroBadgeVersion">v1.0.0</span>
+    </div>
+
+    <h1 class="hero-title" data-animate="fadeInUp">
+      <span class="line-1">The World's Most</span>
+      <span class="line-2 gradient-text">Secure Messenger</span>
+      <span class="line-3">Ever Built.</span>
+    </h1>
+
+    <p class="hero-subtitle" data-animate="fadeInUp" data-delay="100">
+      DL Chat fuses the best of <strong>WhatsApp</strong>, <strong>Telegram</strong>, and <strong>Discord</strong> into one unstoppable platform.<br/>
+      Zero-knowledge E2E encryption. Lightning-fast. Fully private. By <span class="team-name">DEATH LEGION Team</span>.
+    </p>
+
+    <div class="hero-stats" data-animate="fadeInUp" data-delay="150">
+      <div class="stat">
+        <span class="stat-num" data-count="256">0</span><span class="stat-unit">-bit</span>
+        <span class="stat-label">AES Encryption</span>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat">
+        <span class="stat-num" data-count="6">0</span>
+        <span class="stat-label">Platforms</span>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat">
+        <span class="stat-num" data-count="99">0</span><span class="stat-unit">.9%</span>
+        <span class="stat-label">Uptime SLA</span>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat">
+        <span class="stat-num" data-count="0">0</span>
+        <span class="stat-label">Data Sold</span>
+      </div>
+    </div>
+
+    <div class="hero-actions" data-animate="fadeInUp" data-delay="200">
+      <a href="#download" class="btn btn-primary btn-xl">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Free
+      </a>
+      <a href="https://dl-chat-api.death-legion-dlchat.workers.dev/api/v1" target="_blank" class="btn btn-outline btn-xl">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        API Docs
+      </a>
+      <a href="#demo" class="btn btn-ghost btn-xl">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        Watch Demo
+      </a>
+    </div>
+
+    <div class="hero-platforms" data-animate="fadeInUp" data-delay="250">
+      <span>Available on</span>
+      <div class="platform-icons">
+        <span title="Android">🤖</span>
+        <span title="iOS">🍎</span>
+        <span title="Windows">🪟</span>
+        <span title="macOS">💻</span>
+        <span title="Linux">🐧</span>
+        <span title="Web">🌐</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual" data-animate="fadeInRight" data-delay="100">
+    <div class="phone-mockup">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="chat-demo">
+            <div class="chat-header-demo">
+              <div class="chat-avatar-demo">DL</div>
+              <div class="chat-info-demo">
+                <span class="chat-name-demo">Death Legion HQ</span>
+                <span class="chat-status-demo">● 2,847 online</span>
+              </div>
+              <div class="chat-icons-demo">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 14a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+            </div>
+            <div class="messages-demo">
+              <div class="msg msg-in" style="--delay:0s">
+                <div class="msg-bubble">🔐 E2E encrypted channel active</div>
+                <span class="msg-time">09:41</span>
+              </div>
+              <div class="msg msg-out" style="--delay:0.3s">
+                <div class="msg-bubble">Secure. Private. Fast. ⚡</div>
+                <span class="msg-time">09:42 ✓✓</span>
+              </div>
+              <div class="msg msg-in" style="--delay:0.6s">
+                <div class="msg-bubble">Voice message 🎤 0:12</div>
+                <div class="voice-wave">
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <span class="msg-time">09:43</span>
+              </div>
+              <div class="msg msg-out" style="--delay:0.9s">
+                <div class="msg-bubble">📎 dlchat-v1.0.0.apk · 52MB</div>
+                <span class="msg-time">09:44 ✓✓</span>
+              </div>
+              <div class="msg msg-in" style="--delay:1.2s">
+                <div class="msg-bubble">❤️ 🔥 👑 <em>DEATH LEGION</em></div>
+                <span class="msg-time">09:45</span>
+              </div>
+            </div>
+            <div class="chat-input-demo">
+              <span class="input-icon">😊</span>
+              <div class="input-bar">Type a message...</div>
+              <span class="input-icon">🎤</span>
+            </div>
+          </div>
+        </div>
+        <div class="phone-home-bar"></div>
+      </div>
+      <div class="phone-glow"></div>
+      <div class="phone-reflection"></div>
+    </div>
+
+    <!-- Floating feature badges -->
+    <div class="float-badge fb-1" data-animate="fadeIn" data-delay="400">
+      <span class="fb-icon">🔒</span>
+      <div><strong>X25519 ECDH</strong><br/><small>Key Exchange</small></div>
+    </div>
+    <div class="float-badge fb-2" data-animate="fadeIn" data-delay="500">
+      <span class="fb-icon">⚡</span>
+      <div><strong>&lt; 50ms</strong><br/><small>Message Delivery</small></div>
+    </div>
+    <div class="float-badge fb-3" data-animate="fadeIn" data-delay="600">
+      <span class="fb-icon">🌍</span>
+      <div><strong>Cloudflare Edge</strong><br/><small>200+ PoPs</small></div>
+    </div>
+    <div class="float-badge fb-4" data-animate="fadeIn" data-delay="700">
+      <span class="fb-icon">🤖</span>
+      <div><strong>AI Moderation</strong><br/><small>Llama-3 Powered</small></div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span>Scroll to explore</span>
+  </div>
+</section>
+
+<!-- ═══════════════════ MARQUEE ═══════════════════ -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-content">
+      <span>🔐 Zero-Knowledge Encryption</span>
+      <span class="sep">·</span>
+      <span>⚡ Sub-50ms Delivery</span>
+      <span class="sep">·</span>
+      <span>🤖 Bot API</span>
+      <span class="sep">·</span>
+      <span>📞 HD Voice & Video Calls</span>
+      <span class="sep">·</span>
+      <span>📁 2GB File Sharing</span>
+      <span class="sep">·</span>
+      <span>🌐 6 Platforms</span>
+      <span class="sep">·</span>
+      <span>🛡️ AES-256-GCM</span>
+      <span class="sep">·</span>
+      <span>🎭 Custom Themes</span>
+      <span class="sep">·</span>
+      <span>📺 Screen Share</span>
+      <span class="sep">·</span>
+      <span>🗂️ Servers & Channels</span>
+      <span class="sep">·</span>
+      <span>📊 Polls & Reactions</span>
+      <span class="sep">·</span>
+      <span>🔏 Disappearing Messages</span>
+      <span class="sep">·</span>
+      <span>💎 DEATH LEGION Team</span>
+      <span class="sep">·</span>
+      <!-- repeat -->
+      <span>🔐 Zero-Knowledge Encryption</span>
+      <span class="sep">·</span>
+      <span>⚡ Sub-50ms Delivery</span>
+      <span class="sep">·</span>
+      <span>🤖 Bot API</span>
+      <span class="sep">·</span>
+      <span>📞 HD Voice & Video Calls</span>
+      <span class="sep">·</span>
+      <span>📁 2GB File Sharing</span>
+      <span class="sep">·</span>
+      <span>🌐 6 Platforms</span>
+      <span class="sep">·</span>
+      <span>🛡️ AES-256-GCM</span>
+      <span class="sep">·</span>
+      <span>🎭 Custom Themes</span>
+      <span class="sep">·</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ FEATURES ═══════════════════ -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-header" data-animate="fadeInUp">
+      <span class="section-tag">Core Features</span>
+      <h2>Everything You Need. <span class="gradient-text">Nothing You Don't.</span></h2>
+      <p>DL Chat is the only app you'll ever need for communication. Built from the ground up for privacy, performance, and power.</p>
+    </div>
+
+    <div class="features-tabs" data-animate="fadeInUp" data-delay="100">
+      <button class="tab-btn active" data-tab="messaging">💬 Messaging</button>
+      <button class="tab-btn" data-tab="calls">📞 Calls</button>
+      <button class="tab-btn" data-tab="community">🏰 Community</button>
+      <button class="tab-btn" data-tab="developer">🤖 Developer</button>
+      <button class="tab-btn" data-tab="privacy">🔐 Privacy</button>
+    </div>
+
+    <div class="tab-content active" data-tab-content="messaging">
+      <div class="features-grid">
+        <div class="feature-card featured" data-animate="fadeInUp">
+          <div class="feature-icon-wrap" style="--c:#7c3aed">
+            <span class="feature-icon">💬</span>
+          </div>
+          <h3>Next-Gen Messaging</h3>
+          <p>Real-time messages with typing indicators, read receipts, reactions, threads, replies, and pinned messages.</p>
+          <ul class="feature-list">
+            <li>✓ Instant delivery via WebSocket</li>
+            <li>✓ 16 emoji quick reactions</li>
+            <li>✓ Message threading & replies</li>
+            <li>✓ Edit & delete for everyone</li>
+            <li>✓ Message scheduling</li>
+            <li>✓ Polls & voting</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="50">
+          <div class="feature-icon-wrap" style="--c:#06b6d4">
+            <span class="feature-icon">📁</span>
+          </div>
+          <h3>File & Media Sharing</h3>
+          <p>Share files up to 2GB. Images, videos, audio, documents — all with inline preview and fast CDN delivery.</p>
+          <ul class="feature-list">
+            <li>✓ Up to 2GB per file</li>
+            <li>✓ Inline image/video preview</li>
+            <li>✓ Voice messages (waveform)</li>
+            <li>✓ Document preview (PDF, Office)</li>
+            <li>✓ Location sharing</li>
+            <li>✓ Contact cards</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="100">
+          <div class="feature-icon-wrap" style="--c:#f59e0b">
+            <span class="feature-icon">👁️</span>
+          </div>
+          <h3>Status & Stories</h3>
+          <p>Share moments with your contacts. Full-screen stories with reactions, text replies, and viewer analytics.</p>
+          <ul class="feature-list">
+            <li>✓ 24-hour auto-expiry</li>
+            <li>✓ Image, video & text statuses</li>
+            <li>✓ Privacy controls per status</li>
+            <li>✓ Emoji reactions</li>
+            <li>✓ View counts & analytics</li>
+            <li>✓ Music & sticker support</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="150">
+          <div class="feature-icon-wrap" style="--c:#10b981">
+            <span class="feature-icon">⭐</span>
+          </div>
+          <h3>Starred & Saved</h3>
+          <p>Star important messages, save media to collections, and bookmark chats for quick access.</p>
+          <ul class="feature-list">
+            <li>✓ Star any message</li>
+            <li>✓ Saved messages (personal cloud)</li>
+            <li>✓ Chat pinning</li>
+            <li>✓ Message forwarding</li>
+            <li>✓ Media gallery per chat</li>
+            <li>✓ Quick search & filters</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="200">
+          <div class="feature-icon-wrap" style="--c:#ef4444">
+            <span class="feature-icon">🔥</span>
+          </div>
+          <h3>Disappearing Messages</h3>
+          <p>Self-destruct messages after 5s, 30s, 1m, 1h, 1d, or 1 week. View-once photos and videos.</p>
+          <ul class="feature-list">
+            <li>✓ Custom timer per message</li>
+            <li>✓ View-once media</li>
+            <li>✓ Screenshot detection</li>
+            <li>✓ Auto-delete chats</li>
+            <li>✓ Ephemeral mode per chat</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="250">
+          <div class="feature-icon-wrap" style="--c:#8b5cf6">
+            <span class="feature-icon">🌐</span>
+          </div>
+          <h3>Multi-Device Sync</h3>
+          <p>Use DL Chat on all your devices simultaneously. Messages sync instantly across Android, iOS, Desktop, and Web.</p>
+          <ul class="feature-list">
+            <li>✓ Up to 5 linked devices</li>
+            <li>✓ Seamless session transfer</li>
+            <li>✓ Device management</li>
+            <li>✓ Remote device logout</li>
+            <li>✓ Sync history on link</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="calls">
+      <div class="features-grid">
+        <div class="feature-card featured" data-animate="fadeInUp">
+          <div class="feature-icon-wrap" style="--c:#06b6d4">
+            <span class="feature-icon">📞</span>
+          </div>
+          <h3>Crystal-Clear Voice Calls</h3>
+          <p>HD voice calls powered by WebRTC with noise cancellation, echo reduction, and sub-100ms latency.</p>
+          <ul class="feature-list">
+            <li>✓ HD audio (Opus codec)</li>
+            <li>✓ Noise cancellation AI</li>
+            <li>✓ Group calls up to 256</li>
+            <li>✓ Call recording (with consent)</li>
+            <li>✓ Noise suppression</li>
+            <li>✓ Background blur</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="50">
+          <div class="feature-icon-wrap" style="--c:#7c3aed">
+            <span class="feature-icon">🎥</span>
+          </div>
+          <h3>HD Video Calls</h3>
+          <p>1080p video calls with background effects, screen sharing, and picture-in-picture mode.</p>
+          <ul class="feature-list">
+            <li>✓ 1080p HD video</li>
+            <li>✓ Screen sharing</li>
+            <li>✓ Virtual backgrounds</li>
+            <li>✓ Grid/speaker view</li>
+            <li>✓ PiP mode</li>
+            <li>✓ Whiteboard</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="100">
+          <div class="feature-icon-wrap" style="--c:#f59e0b">
+            <span class="feature-icon">🎙️</span>
+          </div>
+          <h3>Voice Channels</h3>
+          <p>Discord-like persistent voice rooms. Join/leave anytime. Perfect for communities and teams.</p>
+          <ul class="feature-list">
+            <li>✓ Persistent voice rooms</li>
+            <li>✓ Push-to-talk support</li>
+            <li>✓ Stage channels</li>
+            <li>✓ Mute/deafen controls</li>
+            <li>✓ Volume per user</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="150">
+          <div class="feature-icon-wrap" style="--c:#10b981">
+            <span class="feature-icon">📊</span>
+          </div>
+          <h3>Call History & Analytics</h3>
+          <p>Full call logs with duration, missed calls filter, call-back shortcuts, and usage statistics.</p>
+          <ul class="feature-list">
+            <li>✓ Full call history</li>
+            <li>✓ Missed calls badge</li>
+            <li>✓ One-tap callback</li>
+            <li>✓ Duration tracking</li>
+            <li>✓ Data usage stats</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="community">
+      <div class="features-grid">
+        <div class="feature-card featured" data-animate="fadeInUp">
+          <div class="feature-icon-wrap" style="--c:#f59e0b">
+            <span class="feature-icon">🏰</span>
+          </div>
+          <h3>Servers & Channels</h3>
+          <p>Create Discord-like servers with unlimited channels, roles, permissions, and invite links.</p>
+          <ul class="feature-list">
+            <li>✓ Text channels</li>
+            <li>✓ Voice channels</li>
+            <li>✓ Announcement channels</li>
+            <li>✓ Custom roles & permissions</li>
+            <li>✓ Up to 500K members</li>
+            <li>✓ Server boosts</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="50">
+          <div class="feature-icon-wrap" style="--c:#8b5cf6">
+            <span class="feature-icon">👥</span>
+          </div>
+          <h3>Group Chats</h3>
+          <p>Create groups up to 100,000 members. Admin controls, sub-groups, and broadcast channels.</p>
+          <ul class="feature-list">
+            <li>✓ Up to 100K members</li>
+            <li>✓ Group admin tools</li>
+            <li>✓ Broadcast channels</li>
+            <li>✓ Poll creation</li>
+            <li>✓ Member management</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="100">
+          <div class="feature-icon-wrap" style="--c:#ef4444">
+            <span class="feature-icon">🔍</span>
+          </div>
+          <h3>Server Discovery</h3>
+          <p>Browse and join public servers by category. Search by topic, language, or community size.</p>
+          <ul class="feature-list">
+            <li>✓ Public server directory</li>
+            <li>✓ Category filtering</li>
+            <li>✓ Invite links</li>
+            <li>✓ Verification system</li>
+            <li>✓ Community badges</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="developer">
+      <div class="features-grid">
+        <div class="feature-card featured" data-animate="fadeInUp">
+          <div class="feature-icon-wrap" style="--c:#10b981">
+            <span class="feature-icon">🤖</span>
+          </div>
+          <h3>Bot API</h3>
+          <p>Build powerful bots with our REST + WebSocket API. Full command system, webhooks, inline queries, and keyboards.</p>
+          <ul class="feature-list">
+            <li>✓ REST API + WebSocket events</li>
+            <li>✓ Inline keyboards & buttons</li>
+            <li>✓ Command routing</li>
+            <li>✓ Webhook support</li>
+            <li>✓ File upload/download</li>
+            <li>✓ Rate limit handling</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="50">
+          <div class="feature-icon-wrap" style="--c:#06b6d4">
+            <span class="feature-icon">🔗</span>
+          </div>
+          <h3>Webhooks</h3>
+          <p>Real-time event delivery to your server. Message events, user actions, file uploads — everything.</p>
+          <ul class="feature-list">
+            <li>✓ Configurable events</li>
+            <li>✓ HMAC-SHA256 signature</li>
+            <li>✓ Retry with backoff</li>
+            <li>✓ Delivery dashboard</li>
+            <li>✓ Payload filtering</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="100">
+          <div class="feature-icon-wrap" style="--c:#f59e0b">
+            <span class="feature-icon">⚙️</span>
+          </div>
+          <h3>Developer Console</h3>
+          <p>Full-featured developer dashboard. API key management, usage analytics, bot testing, and logs.</p>
+          <ul class="feature-list">
+            <li>✓ API key management</li>
+            <li>✓ Usage dashboards</li>
+            <li>✓ Bot testing sandbox</li>
+            <li>✓ Webhook log viewer</li>
+            <li>✓ Rate limit monitoring</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="privacy">
+      <div class="features-grid">
+        <div class="feature-card featured" data-animate="fadeInUp">
+          <div class="feature-icon-wrap" style="--c:#7c3aed">
+            <span class="feature-icon">🔐</span>
+          </div>
+          <h3>End-to-End Encryption</h3>
+          <p>Every message, call, and file is encrypted with X25519 ECDH key exchange and AES-256-GCM cipher.</p>
+          <ul class="feature-list">
+            <li>✓ X25519 ECDH key exchange</li>
+            <li>✓ AES-256-GCM encryption</li>
+            <li>✓ PBKDF2-SHA256 (100K iter)</li>
+            <li>✓ HMAC-SHA256 integrity</li>
+            <li>✓ Perfect forward secrecy</li>
+            <li>✓ Zero server key access</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="50">
+          <div class="feature-icon-wrap" style="--c:#ef4444">
+            <span class="feature-icon">🛡️</span>
+          </div>
+          <h3>Privacy Controls</h3>
+          <p>Granular privacy settings for every aspect of your profile. Choose who sees what, always.</p>
+          <ul class="feature-list">
+            <li>✓ Profile visibility controls</li>
+            <li>✓ Last seen privacy</li>
+            <li>✓ Read receipt toggle</li>
+            <li>✓ Group invite control</li>
+            <li>✓ IP address masking</li>
+          </ul>
+        </div>
+        <div class="feature-card" data-animate="fadeInUp" data-delay="100">
+          <div class="feature-icon-wrap" style="--c:#10b981">
+            <span class="feature-icon">🔑</span>
+          </div>
+          <h3>2FA & Passkeys</h3>
+          <p>Two-factor authentication with TOTP, passkey (WebAuthn) login, and hardware key support.</p>
+          <ul class="feature-list">
+            <li>✓ TOTP (Google Auth, Authy)</li>
+            <li>✓ Passkey / WebAuthn</li>
+            <li>✓ Hardware security keys</li>
+            <li>✓ Backup codes</li>
+            <li>✓ Login alerts</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SECURITY DEEP DIVE ═══════════════════ -->
+<section class="section section-dark" id="security">
+  <div class="container">
+    <div class="section-header" data-animate="fadeInUp">
+      <span class="section-tag">Military-Grade Security</span>
+      <h2>Cryptography That <span class="gradient-text">Governments Fear.</span></h2>
+      <p>Every layer of DL Chat is hardened with the most advanced cryptographic primitives available.</p>
+    </div>
+
+    <div class="crypto-diagram" data-animate="fadeInUp" data-delay="100">
+      <div class="crypto-flow">
+        <div class="crypto-node">
+          <div class="crypto-icon">📱</div>
+          <span>Your Device</span>
+        </div>
+        <div class="crypto-arrow">
+          <div class="crypto-label">X25519 ECDH<br/>Key Exchange</div>
+          <div class="arrow-line"><div class="arrow-packet"></div></div>
+        </div>
+        <div class="crypto-node crypto-center">
+          <div class="crypto-icon">🔐</div>
+          <span>AES-256-GCM<br/>Encrypted Payload</span>
+        </div>
+        <div class="crypto-arrow">
+          <div class="crypto-label">Zero-Knowledge<br/>Transit</div>
+          <div class="arrow-line"><div class="arrow-packet"></div></div>
+        </div>
+        <div class="crypto-node">
+          <div class="crypto-icon">📱</div>
+          <span>Recipient's Device</span>
+        </div>
+      </div>
+      <p class="crypto-note">⚠️ The server <strong>never</strong> sees your plaintext messages. All encryption/decryption happens on-device only.</p>
+    </div>
+
+    <div class="security-grid" data-animate="fadeInUp" data-delay="200">
+      <div class="security-card">
+        <div class="security-badge">NIST Approved</div>
+        <div class="security-algo">AES-256-GCM</div>
+        <p>Symmetric encryption for message payloads. Authenticated encryption prevents tampering.</p>
+      </div>
+      <div class="security-card">
+        <div class="security-badge">RFC 7748</div>
+        <div class="security-algo">X25519 ECDH</div>
+        <p>Elliptic-curve Diffie-Hellman for key exchange. 128-bit equivalent security.</p>
+      </div>
+      <div class="security-card">
+        <div class="security-badge">NIST SP 800-132</div>
+        <div class="security-algo">PBKDF2-SHA256</div>
+        <p>100,000 iterations for password derivation. Resistant to brute-force attacks.</p>
+      </div>
+      <div class="security-card">
+        <div class="security-badge">RFC 2104</div>
+        <div class="security-algo">HMAC-SHA256</div>
+        <p>Message authentication code for data integrity verification on all payloads.</p>
+      </div>
+      <div class="security-card">
+        <div class="security-badge">FIPS 180-4</div>
+        <div class="security-algo">SHA-256</div>
+        <p>Cryptographic hash for signatures, checksums, and key derivation functions.</p>
+      </div>
+      <div class="security-card">
+        <div class="security-badge">W3C WebAuthn</div>
+        <div class="security-algo">Passkey / FIDO2</div>
+        <p>Phishing-resistant authentication. No passwords on the wire — ever.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PLATFORMS ═══════════════════ -->
+<section class="section" id="platforms">
+  <div class="container">
+    <div class="section-header" data-animate="fadeInUp">
+      <span class="section-tag">6 Platforms</span>
+      <h2>Your Conversations, <span class="gradient-text">Everywhere.</span></h2>
+      <p>One account. Six platforms. All synced instantly in real time.</p>
+    </div>
+
+    <div class="platforms-showcase" data-animate="fadeInUp" data-delay="100">
+      <div class="platform-card" data-platform="android">
+        <div class="platform-header">
+          <span class="platform-emoji">🤖</span>
+          <div>
+            <h3>Android</h3>
+            <span class="platform-badge badge-stable">Stable</span>
+          </div>
+          <span class="platform-version" id="version-android">v1.0.0</span>
+        </div>
+        <p>Native Material You design. Background sync, push notifications, and Android-exclusive widgets.</p>
+        <div class="platform-specs">
+          <span>Android 8.0+</span>
+          <span>ARM64 / x86_64</span>
+          <span>~52MB</span>
+        </div>
+        <a href="#" class="btn btn-platform" id="dl-android" download>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download APK
+        </a>
+        <a href="#" class="btn btn-ghost-sm">Google Play (Coming Soon)</a>
+      </div>
+
+      <div class="platform-card" data-platform="ios">
+        <div class="platform-header">
+          <span class="platform-emoji">🍎</span>
+          <div>
+            <h3>iOS</h3>
+            <span class="platform-badge badge-soon">Coming Soon</span>
+          </div>
+          <span class="platform-version" id="version-ios">v1.0.0</span>
+        </div>
+        <p>Native SwiftUI design. Siri shortcuts, SharePlay, iOS widgets, and iCloud backup support.</p>
+        <div class="platform-specs">
+          <span>iOS 15.0+</span>
+          <span>Universal Binary</span>
+          <span>~45MB</span>
+        </div>
+        <a href="#" class="btn btn-platform-disabled">
+          App Store (Coming Soon)
+        </a>
+        <span class="platform-note">Sign up for early access →</span>
+      </div>
+
+      <div class="platform-card featured-platform" data-platform="windows">
+        <div class="platform-header">
+          <span class="platform-emoji">🪟</span>
+          <div>
+            <h3>Windows</h3>
+            <span class="platform-badge badge-stable">Stable</span>
+          </div>
+          <span class="platform-version" id="version-windows">v1.0.0</span>
+        </div>
+        <p>Native Electron app with system tray, notifications, auto-start, and Windows Hello support.</p>
+        <div class="platform-specs">
+          <span>Windows 10/11</span>
+          <span>x64 / ARM64</span>
+          <span>~78MB</span>
+        </div>
+        <a href="#" class="btn btn-platform" id="dl-windows" download>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download .exe
+        </a>
+        <a href="#" class="btn btn-ghost-sm" id="dl-windows-zip">Download .zip</a>
+      </div>
+
+      <div class="platform-card" data-platform="macos">
+        <div class="platform-header">
+          <span class="platform-emoji">💻</span>
+          <div>
+            <h3>macOS</h3>
+            <span class="platform-badge badge-beta">Beta</span>
+          </div>
+          <span class="platform-version" id="version-macos">v1.0.0</span>
+        </div>
+        <p>Universal binary for Intel & Apple Silicon. Menu bar integration and macOS notifications.</p>
+        <div class="platform-specs">
+          <span>macOS 11.0+</span>
+          <span>Intel + M-chip</span>
+          <span>~82MB</span>
+        </div>
+        <a href="#" class="btn btn-platform" id="dl-macos" download>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download .dmg
+        </a>
+      </div>
+
+      <div class="platform-card" data-platform="linux">
+        <div class="platform-header">
+          <span class="platform-emoji">🐧</span>
+          <div>
+            <h3>Linux</h3>
+            <span class="platform-badge badge-stable">Stable</span>
+          </div>
+          <span class="platform-version" id="version-linux">v1.0.0</span>
+        </div>
+        <p>Debian/Ubuntu DEB and ZIP packages. Tray support, native notifications, and Wayland compatibility.</p>
+        <div class="platform-specs">
+          <span>Ubuntu 20.04+</span>
+          <span>x64 / ARM64</span>
+          <span>~103MB</span>
+        </div>
+        <a href="#" class="btn btn-platform" id="dl-linux" download>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download .deb
+        </a>
+        <a href="#" class="btn btn-ghost-sm" id="dl-linux-zip">Download .zip</a>
+      </div>
+
+      <div class="platform-card" data-platform="web">
+        <div class="platform-header">
+          <span class="platform-emoji">🌐</span>
+          <div>
+            <h3>Web App</h3>
+            <span class="platform-badge badge-stable">Stable</span>
+          </div>
+          <span class="platform-badge badge-pwa">PWA</span>
+        </div>
+        <p>Progressive Web App. Install from browser. Works offline with service worker caching.</p>
+        <div class="platform-specs">
+          <span>Any Browser</span>
+          <span>PWA Installable</span>
+          <span>No Install</span>
+        </div>
+        <a href="https://app.dlchat.app" class="btn btn-platform" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Open Web App
+        </a>
+      </div>
+    </div>
+
+    <!-- QR Code section -->
+    <div class="qr-section" data-animate="fadeInUp" data-delay="200">
+      <div class="qr-card">
+        <div class="qr-code" id="qrCode">
+          <svg viewBox="0 0 21 21" fill="currentColor" width="120" height="120">
+            <rect x="0" y="0" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <rect x="1" y="1" width="5" height="5" rx="0.5"/>
+            <rect x="14" y="0" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <rect x="15" y="1" width="5" height="5" rx="0.5"/>
+            <rect x="0" y="14" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1"/>
+            <rect x="1" y="15" width="5" height="5" rx="0.5"/>
+            <rect x="9" y="0" width="2" height="2"/><rect x="9" y="3" width="2" height="2"/>
+            <rect x="9" y="6" width="3" height="2"/><rect x="12" y="9" width="2" height="2"/>
+            <rect x="9" y="9" width="2" height="3"/><rect x="0" y="9" width="3" height="2"/>
+            <rect x="4" y="9" width="3" height="2"/><rect x="14" y="9" width="3" height="3"/>
+            <rect x="18" y="9" width="3" height="2"/><rect x="9" y="13" width="2" height="2"/>
+            <rect x="12" y="12" width="2" height="2"/><rect x="14" y="14" width="3" height="3"/>
+            <rect x="18" y="14" width="3" height="3"/><rect x="9" y="16" width="5" height="2"/>
+            <rect x="9" y="19" width="3" height="2"/><rect x="14" y="19" width="3" height="2"/>
+            <rect x="18" y="18" width="3" height="3"/>
+          </svg>
+        </div>
+        <div class="qr-info">
+          <h3>Scan to Download</h3>
+          <p>Point your camera at the QR code to download DL Chat for your platform.</p>
+          <div class="qr-platform-btns">
+            <button class="qr-btn active" data-qr="android">Android</button>
+            <button class="qr-btn" data-qr="ios">iOS</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ BOT API SECTION ═══════════════════ -->
+<section class="section section-dark" id="bots">
+  <div class="container">
+    <div class="section-header" data-animate="fadeInUp">
+      <span class="section-tag">Bot API</span>
+      <h2>Build Bots That <span class="gradient-text">Do Anything.</span></h2>
+      <p>Our powerful Bot API lets you automate workflows, build assistants, integrate services, and create interactive experiences.</p>
+    </div>
+
+    <div class="bot-showcase" data-animate="fadeInUp" data-delay="100">
+      <div class="code-window">
+        <div class="code-titlebar">
+          <div class="code-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="code-filename">my-bot.js</span>
+          <div class="code-lang">JavaScript</div>
+        </div>
+        <pre class="code-block"><code id="codeDisplay"><span class="code-comment">// DL Chat Bot API — Hello World Bot</span>
+<span class="code-keyword">const</span> <span class="code-var">DLBot</span> = <span class="code-keyword">require</span>(<span class="code-str">'@dlchat/bot-sdk'</span>);
+
+<span class="code-keyword">const</span> <span class="code-var">bot</span> = <span class="code-keyword">new</span> <span class="code-var">DLBot</span>({
+  token: <span class="code-str">'YOUR_BOT_TOKEN'</span>,
+  api: <span class="code-str">'https://dl-chat-api.death-legion-dlchat.workers.dev'</span>
+});
+
+<span class="code-comment">// Register a /start command</span>
+<span class="code-var">bot</span>.<span class="code-func">command</span>(<span class="code-str">'start'</span>, <span class="code-keyword">async</span> (<span class="code-var">ctx</span>) =&gt; {
+  <span class="code-keyword">await</span> <span class="code-var">ctx</span>.<span class="code-func">reply</span>(<span class="code-str">'👋 Welcome to DL Chat Bot!'</span>, {
+    keyboard: [[
+      { text: <span class="code-str">'📊 Stats'</span>, callback: <span class="code-str">'stats'</span> },
+      { text: <span class="code-str">'⚙️ Settings'</span>, callback: <span class="code-str">'settings'</span> }
+    ]]
+  });
+});
+
+<span class="code-comment">// Handle callback queries</span>
+<span class="code-var">bot</span>.<span class="code-func">callback</span>(<span class="code-str">'stats'</span>, <span class="code-keyword">async</span> (<span class="code-var">ctx</span>) =&gt; {
+  <span class="code-keyword">const</span> <span class="code-var">stats</span> = <span class="code-keyword">await</span> <span class="code-var">ctx</span>.<span class="code-func">getStats</span>();
+  <span class="code-keyword">await</span> <span class="code-var">ctx</span>.<span class="code-func">editMessage</span>(<span class="code-str">`📈 Messages: <span class="code-tmpl">${stats.messages}</span>`</span>);
+});
+
+<span class="code-comment">// Listen on all messages</span>
+<span class="code-var">bot</span>.<span class="code-func">on</span>(<span class="code-str">'message'</span>, <span class="code-keyword">async</span> (<span class="code-var">ctx</span>) =&gt; {
+  <span class="code-keyword">if</span> (<span class="code-var">ctx</span>.message.text.<span class="code-func">includes</span>(<span class="code-str">'hello'</span>)) {
+    <span class="code-keyword">await</span> <span class="code-var">ctx</span>.<span class="code-func">react</span>(<span class="code-str">'👋'</span>);
+  }
+});
+
+<span class="code-var">bot</span>.<span class="code-func">start</span>();
+<span class="code-comment">// Bot is live! 🚀</span></code></pre>
+      </div>
+
+      <div class="bot-features">
+        <h3>What Can Your Bot Do?</h3>
+        <div class="bot-capability-list">
+          <div class="bot-cap">
+            <span class="bot-cap-icon">💬</span>
+            <div>
+              <strong>Send & receive messages</strong>
+              <p>Text, images, files, voice, location, and more</p>
+            </div>
+          </div>
+          <div class="bot-cap">
+            <span class="bot-cap-icon">⌨️</span>
+            <div>
+              <strong>Interactive keyboards</strong>
+              <p>Inline buttons, callback queries, custom reply keyboards</p>
+            </div>
+          </div>
+          <div class="bot-cap">
+            <span class="bot-cap-icon">🔗</span>
+            <div>
+              <strong>Webhook delivery</strong>
+              <p>Real-time events pushed to your server endpoint</p>
+            </div>
+          </div>
+          <div class="bot-cap">
+            <span class="bot-cap-icon">👥</span>
+            <div>
+              <strong>Group management</strong>
+              <p>Moderate, welcome, ban, mute, and manage members</p>
+            </div>
+          </div>
+          <div class="bot-cap">
+            <span class="bot-cap-icon">📊</span>
+            <div>
+              <strong>Polls & surveys</strong>
+              <p>Create polls, collect responses, show real-time results</p>
+            </div>
+          </div>
+          <div class="bot-cap">
+            <span class="bot-cap-icon">🔍</span>
+            <div>
+              <strong>Inline mode</strong>
+              <p>Answer inline queries anywhere with @your_bot query</p>
+            </div>
+          </div>
+        </div>
+        <a href="https://dl-chat-api.death-legion-dlchat.workers.dev/api/v1" class="btn btn-primary" target="_blank">Read Bot API Docs →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ COMPARISON ═══════════════════ -->
+<section class="section" id="comparison">
+  <div class="container">
+    <div class="section-header" data-animate="fadeInUp">
+      <span class="section-tag">Why DL Chat?</span>
+      <h2>We Don't Compromise. <span class="gradient-text">Others Do.</span></h2>
+    </div>
+
+    <div class="comparison-table-wrap" data-animate="fadeInUp" data-delay="100">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="col-dlchat">
+              <div class="th-app">
+                <span>💬</span> DL Chat
+                <span class="recommended">BEST</span>
+              </div>
+            </th>
+            <th><div class="th-app"><span>💚</span> WhatsApp</div></th>
+            <th><div class="th-app"><span>✈️</span> Telegram</div></th>
+            <th><div class="th-app"><span>🎮</span> Discord</div></th>
+            <th><div class="th-app"><span>🔵</span> Signal</div></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>End-to-End Encryption</td><td class="col-dlchat"><span class="tick">✓ Always</span></td><td><span class="tick">✓</span></td><td><span class="partial">◎ Optional</span></td><td><span class="cross">✗</span></td><td><span class="tick">✓</span></td></tr>
+          <tr><td>File Size Limit</td><td class="col-dlchat"><span class="tick">✓ 2GB</span></td><td><span class="partial">◎ 2GB</span></td><td><span class="partial">◎ 2GB</span></td><td><span class="partial">◎ 500MB</span></td><td><span class="cross">✗ 100MB</span></td></tr>
+          <tr><td>Group Call Members</td><td class="col-dlchat"><span class="tick">✓ 256</span></td><td><span class="partial">◎ 32</span></td><td><span class="tick">✓ 1000</span></td><td><span class="tick">✓ Unlimited</span></td><td><span class="partial">◎ 40</span></td></tr>
+          <tr><td>Bot API</td><td class="col-dlchat"><span class="tick">✓ Full API</span></td><td><span class="cross">✗</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>Server / Community</td><td class="col-dlchat"><span class="tick">✓ Discord-like</span></td><td><span class="cross">✗</span></td><td><span class="partial">◎ Basic</span></td><td><span class="tick">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>Status / Stories</td><td class="col-dlchat"><span class="tick">✓ Full</span></td><td><span class="tick">✓</span></td><td><span class="partial">◎ Basic</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>Open Source</td><td class="col-dlchat"><span class="cross">✗ Proprietary</span></td><td><span class="cross">✗</span></td><td><span class="partial">◎ Partial</span></td><td><span class="cross">✗</span></td><td><span class="tick">✓</span></td></tr>
+          <tr><td>Data Collection</td><td class="col-dlchat"><span class="tick">✓ Zero</span></td><td><span class="cross">✗ Metadata</span></td><td><span class="partial">◎ Some</span></td><td><span class="cross">✗ Extensive</span></td><td><span class="tick">✓ Zero</span></td></tr>
+          <tr><td>Desktop Native App</td><td class="col-dlchat"><span class="tick">✓ Electron</span></td><td><span class="partial">◎ Web wrapper</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td><td><span class="tick">✓</span></td></tr>
+          <tr><td>Passkey / WebAuthn</td><td class="col-dlchat"><span class="tick">✓ Yes</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>AI Moderation</td><td class="col-dlchat"><span class="tick">✓ Llama-3</span></td><td><span class="tick">✓</span></td><td><span class="partial">◎ Limited</span></td><td><span class="tick">✓</span></td><td><span class="cross">✗</span></td></tr>
+          <tr><td>Price</td><td class="col-dlchat"><span class="tick">✓ Free Forever</span></td><td><span class="tick">✓ Free</span></td><td><span class="tick">✓ Free</span></td><td><span class="partial">◎ Freemium</span></td><td><span class="tick">✓ Free</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TECH STACK ═══════════════════ -->
+<section class="section section-dark" id="tech">
+  <div class="container">
+    <div class="section-header" data-animate="fadeInUp">
+      <span class="section-tag">Built on the Best</span>
+      <h2>Enterprise-Grade <span class="gradient-text">Infrastructure.</span></h2>
+      <p>Every component is chosen for performance, reliability, and security.</p>
+    </div>
+
+    <div class="tech-grid" data-animate="fadeInUp" data-delay="100">
+      <div class="tech-card">
+        <div class="tech-logo">☁️</div>
+        <h4>Cloudflare Workers</h4>
+        <p>Edge computing at 200+ PoPs worldwide. Sub-10ms cold start.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">🗄️</div>
+        <h4>Cloudflare D1</h4>
+        <p>Globally distributed SQLite. Consistent reads at the edge.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">⚡</div>
+        <h4>Cloudflare KV</h4>
+        <p>Ultra-low-latency key-value store for sessions and caching.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">📦</div>
+        <h4>Cloudflare R2</h4>
+        <p>S3-compatible object storage with zero egress fees.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">🔄</div>
+        <h4>Durable Objects</h4>
+        <p>Stateful WebSocket coordination for real-time chat rooms.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">🤖</div>
+        <h4>Workers AI</h4>
+        <p>Llama-3 powered content moderation running at the edge.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">🌶️</div>
+        <h4>Hono.js</h4>
+        <p>Ultra-fast web framework built for edge runtimes.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">⚛️</div>
+        <h4>React Native + Expo</h4>
+        <p>Cross-platform mobile with native performance via Expo SDK 51.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-logo">🖥️</div>
+        <h4>Electron 32</h4>
+        <p>Desktop app with auto-updater, native OS integration, and tray.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PRICING ═══════════════════ -->
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-header" data-animate="fadeInUp">
+      <span class="section-tag">Pricing</span>
+      <h2>Free. Forever. <span class="gradient-text">No Tricks.</span></h2>
+      <p>DL Chat is completely free. We believe secure communication is a human right.</p>
+    </div>
+
+    <div class="pricing-grid" data-animate="fadeInUp" data-delay="100">
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3>Free</h3>
+          <div class="pricing-price">
+            <span class="price-amount">$0</span>
+            <span class="price-period">/ forever</span>
+          </div>
+          <p>Everything you need for personal and group communication.</p>
+        </div>
+        <ul class="pricing-features">
+          <li>✓ Unlimited messages</li>
+          <li>✓ Unlimited chats & groups</li>
+          <li>✓ Voice & video calls</li>
+          <li>✓ File sharing up to 2GB</li>
+          <li>✓ Status / Stories</li>
+          <li>✓ E2E encryption always on</li>
+          <li>✓ 6 platform access</li>
+          <li>✓ Bot creation (3 bots)</li>
+          <li>✓ Server creation (2 servers)</li>
+        </ul>
+        <a href="#download" class="btn btn-primary btn-block">Get Started Free</a>
+      </div>
+
+      <div class="pricing-card pricing-featured">
+        <div class="pricing-ribbon">COMING SOON</div>
+        <div class="pricing-header">
+          <h3>DL Premium</h3>
+          <div class="pricing-price">
+            <span class="price-amount">$4.99</span>
+            <span class="price-period">/ month</span>
+          </div>
+          <p>Power features for heavy users, content creators, and teams.</p>
+        </div>
+        <ul class="pricing-features">
+          <li>✓ Everything in Free</li>
+          <li>✓ Custom username badge</li>
+          <li>✓ 4K video calls</li>
+          <li>✓ File sharing up to 4GB</li>
+          <li>✓ Animated profile photo</li>
+          <li>✓ Unlimited bots</li>
+          <li>✓ Server boosts (5/month)</li>
+          <li>✓ Custom themes & sticker packs</li>
+          <li>✓ Priority support</li>
+          <li>✓ 10GB cloud storage</li>
+        </ul>
+        <a href="#" class="btn btn-primary btn-block">Notify Me</a>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-header">
+          <h3>Enterprise</h3>
+          <div class="pricing-price">
+            <span class="price-amount">Custom</span>
+          </div>
+          <p>Self-hosted or managed deployment for organizations and enterprises.</p>
+        </div>
+        <ul class="pricing-features">
+          <li>✓ Everything in Premium</li>
+          <li>✓ Self-hosted deployment</li>
+          <li>✓ SSO / SAML / LDAP</li>
+          <li>✓ Admin dashboard</li>
+          <li>✓ Compliance exports</li>
+          <li>✓ SLA guarantee</li>
+          <li>✓ Custom domain</li>
+          <li>✓ Dedicated infrastructure</li>
+          <li>✓ 24/7 support</li>
+        </ul>
+        <a href="mailto:enterprise@dlchat.app" class="btn btn-outline btn-block">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ DOWNLOAD CTA ═══════════════════ -->
+<section class="section download-cta" id="download">
+  <div class="container">
+    <div class="cta-inner" data-animate="fadeInUp">
+      <div class="cta-orbs">
+        <div class="cta-orb cta-orb-1"></div>
+        <div class="cta-orb cta-orb-2"></div>
+      </div>
+      <span class="section-tag">Download Now</span>
+      <h2>Start Messaging <span class="gradient-text">Securely Today.</span></h2>
+      <p>Join the DEATH LEGION ecosystem. Free, private, powerful.</p>
+
+      <div class="download-cards">
+        <div class="dl-card">
+          <span class="dl-icon">🤖</span>
+          <div class="dl-info">
+            <strong>Android APK</strong>
+            <span class="dl-size" id="size-android">~52 MB</span>
+          </div>
+          <a href="#" class="btn btn-sm btn-primary" id="dl-android-2">Download</a>
+        </div>
+        <div class="dl-card">
+          <span class="dl-icon">🪟</span>
+          <div class="dl-info">
+            <strong>Windows .exe</strong>
+            <span class="dl-size" id="size-windows">~78 MB</span>
+          </div>
+          <a href="#" class="btn btn-sm btn-primary" id="dl-windows-2">Download</a>
+        </div>
+        <div class="dl-card">
+          <span class="dl-icon">🐧</span>
+          <div class="dl-info">
+            <strong>Linux .zip</strong>
+            <span class="dl-size" id="size-linux">~103 MB</span>
+          </div>
+          <a href="#" class="btn btn-sm btn-primary" id="dl-linux-2">Download</a>
+        </div>
+        <div class="dl-card">
+          <span class="dl-icon">💻</span>
+          <div class="dl-info">
+            <strong>macOS .dmg</strong>
+            <span class="dl-size" id="size-macos">~82 MB</span>
+          </div>
+          <a href="#" class="btn btn-sm btn-primary" id="dl-macos-2">Download</a>
+        </div>
+        <div class="dl-card">
+          <span class="dl-icon">🌐</span>
+          <div class="dl-info">
+            <strong>Web App (PWA)</strong>
+            <span class="dl-size">No Install</span>
+          </div>
+          <a href="https://app.dlchat.app" class="btn btn-sm btn-outline" target="_blank">Open</a>
+        </div>
+      </div>
+
+      <div class="cta-api-status">
+        <div class="api-status-dot" id="apiStatusDot"></div>
+        <span id="apiStatusText">Checking API status...</span>
+        <span class="api-url">dl-chat-api.death-legion-dlchat.workers.dev</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="logo-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="8" fill="url(#lfg)"/><path d="M7 10h14M7 14h10M7 18h8" stroke="white" stroke-width="2" stroke-linecap="round"/><defs><linearGradient id="lfg" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#4f46e5"/></linearGradient></defs></svg>
+          </div>
+          <span class="logo-text">DL<span class="logo-accent">Chat</span></span>
+        </div>
+        <p class="footer-tagline">The world's most secure messaging platform.<br/>Built by <strong>DEATH LEGION Team</strong> with ❤️ and cryptography.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" title="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </a>
+          <a href="#" class="social-btn" title="Twitter/X">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" class="social-btn" title="Discord">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.1.12 18.14.145 18.16a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+          </a>
+          <a href="#" class="social-btn" title="Telegram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#features">Features</a>
+        <a href="#security">Security</a>
+        <a href="#platforms">Platforms</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#">Changelog</a>
+        <a href="#">Roadmap</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Developers</h4>
+        <a href="https://dl-chat-api.death-legion-dlchat.workers.dev/api/v1" target="_blank">API Reference</a>
+        <a href="#">Bot SDK</a>
+        <a href="#">Webhooks</a>
+        <a href="#">Bot Examples</a>
+        <a href="#">Status Page</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About DEATH LEGION</a>
+        <a href="#">Blog</a>
+        <a href="mailto:enterprise@dlchat.app">Enterprise</a>
+        <a href="#">Security Disclosure</a>
+        <a href="#">Contact</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+        <a href="#">DMCA</a>
+        <a href="#">License</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <p>&copy; 2025 DL Chat. All rights reserved. <strong>DEATH LEGION Team</strong>.</p>
+        <p class="footer-legal-note">DL Chat is proprietary software. Unauthorized copying, distribution, or reverse engineering is strictly prohibited.</p>
+      </div>
+      <div class="footer-bottom-right">
+        <span class="tech-badge">Cloudflare Workers</span>
+        <span class="tech-badge">Hono.js</span>
+        <span class="tech-badge">React Native</span>
+        <span class="tech-badge">Electron</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="src/main.js" type="module"></script>
+</body>
+</html>

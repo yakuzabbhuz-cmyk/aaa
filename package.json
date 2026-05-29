@@ -1,0 +1,26 @@
+{
+  "name": "dl-chat",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DL Chat - The Securest Messaging App by DEATH LEGION Team",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "deploy": "bash scripts/deploy.sh",
+    "deploy:api": "cd apps/api && npx wrangler deploy",
+    "deploy:web": "cd apps/web && npm run build && npx wrangler pages deploy dist --project-name dl-chat",
+    "deploy:admin": "cd apps/admin && npm run build && npx wrangler pages deploy dist --project-name dl-chat-admin",
+    "build:mobile": "cd apps/mobile && eas build --platform android --profile apk",
+    "build:desktop": "cd apps/desktop && npm run make",
+    "lint": "turbo lint",
+    "type-check": "turbo type-check"
+  },
+  "devDependencies": {
+    "turbo": "latest",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

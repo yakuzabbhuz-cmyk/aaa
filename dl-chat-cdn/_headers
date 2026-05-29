@@ -1,0 +1,15 @@
+/*.exe
+  Content-Type: application/octet-stream
+  Content-Disposition: attachment
+
+/*.zip
+  Content-Type: application/zip
+  Content-Disposition: attachment
+
+/*.deb
+  Content-Type: application/vnd.debian.binary-package
+  Content-Disposition: attachment
+
+/*.apk
+  Content-Type: application/vnd.android.package-archive
+  Content-Disposition: attachment

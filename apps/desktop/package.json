@@ -1,0 +1,89 @@
+{
+  "name": "dl-chat",
+  "productName": "DL Chat",
+  "version": "1.0.0",
+  "description": "DL Chat Desktop App by DEATH LEGION Team",
+  "main": ".webpack/main",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "eslint --ext .ts,.tsx .",
+    "dev": "electron-forge start"
+  },
+  "keywords": [
+    "messaging",
+    "chat",
+    "dl-chat",
+    "death-legion"
+  ],
+  "author": "DEATH LEGION Team",
+  "license": "MIT",
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^8.1.0",
+    "electron-updater": "^6.1.0"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.4.0",
+    "@electron-forge/maker-deb": "^7.4.0",
+    "@electron-forge/maker-dmg": "^7.4.0",
+    "@electron-forge/maker-squirrel": "^7.4.0",
+    "@electron-forge/maker-zip": "^7.4.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.4.0",
+    "@electron-forge/plugin-fuses": "^7.4.0",
+    "@electron-forge/plugin-webpack": "^7.4.0",
+    "@types/node": "^20.0.0",
+    "css-loader": "^6.8.0",
+    "electron": "^32.0.0",
+    "electron-builder": "^26.8.1",
+    "mini-css-extract-plugin": "^2.10.2",
+    "path-browserify": "^1.0.1",
+    "style-loader": "^3.3.3",
+    "ts-loader": "^9.5.0",
+    "typescript": "^5.3.0",
+    "webpack": "^5.88.0"
+  },
+  "build": {
+    "appId": "com.deathlegion.dlchat",
+    "productName": "DL Chat",
+    "copyright": "Copyright \u00a9 2025 DEATH LEGION Team. All Rights Reserved.",
+    "directories": {
+      "output": "dist-win",
+      "buildResources": "assets"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "executableName": "DLChat",
+      "legalTrademarks": "DEATH LEGION Team",
+      "forceCodeSigning": false,
+      "artifactName": "DLChat-${version}-win-x64.zip"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "DL Chat",
+      "artifactName": "DLChat-Setup-${version}-x64.exe"
+    },
+    "portable": {
+      "artifactName": "DLChat-Portable-${version}-x64.exe"
+    },
+    "forceCodeSigning": false
+  }
+}

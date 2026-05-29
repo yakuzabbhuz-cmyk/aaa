@@ -1,0 +1,108 @@
+DL CHAT PROPRIETARY SOFTWARE LICENSE
+=====================================
+
+Copyright (c) 2025 DEATH LEGION Team. All Rights Reserved.
+
+IMPORTANT LEGAL NOTICE — READ CAREFULLY BEFORE USING THIS SOFTWARE.
+
+This software, "DL Chat" (hereinafter referred to as the "Software"), including
+all source code, documentation, assets, designs, algorithms, cryptographic
+implementations, and associated materials, is the exclusive proprietary
+intellectual property of DEATH LEGION Team.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GRANT OF LICENSE
+
+DEATH LEGION Team grants you a limited, non-exclusive, non-transferable,
+non-sublicensable, revocable license to:
+
+  1. Download and install the compiled binary of the Software on your personal
+     devices for personal, non-commercial use only.
+  2. Access and use the Software's features as intended by DEATH LEGION Team.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+RESTRICTIONS — THE FOLLOWING ACTIONS ARE STRICTLY PROHIBITED:
+
+  ✗  Copying, distributing, publishing, or sharing the source code in any form
+  ✗  Reverse engineering, decompiling, disassembling, or otherwise attempting
+     to derive the source code from the compiled Software
+  ✗  Modifying, adapting, translating, or creating derivative works
+  ✗  Sublicensing, selling, renting, leasing, or commercially distributing
+     the Software or any portion thereof
+  ✗  Removing or altering any proprietary notices, labels, or marks
+  ✗  Using the Software to build competing products or services
+  ✗  Automated scraping of the API beyond normal usage patterns
+  ✗  Circumventing any technical protection measures or encryption
+  ✗  Using DEATH LEGION Team's name, logo, or branding without prior written consent
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+INTELLECTUAL PROPERTY
+
+All title, ownership rights, and intellectual property rights in and to the
+Software, including but not limited to:
+
+  • The DL Chat brand, logo, and visual design language
+  • The E2E encryption implementation and key exchange protocol
+  • The Cloudflare Workers API architecture and Durable Objects design
+  • The Bot API specification and SDK
+  • All UI/UX designs, screen layouts, and interaction patterns
+  • The database schema and data models
+  • All algorithms, logic, and business methods
+
+...remain exclusively with DEATH LEGION Team.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+NO WARRANTY
+
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL
+DEATH LEGION TEAM BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF,
+OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ENFORCEMENT
+
+DEATH LEGION Team reserves the right to pursue all available legal remedies
+for any violation of this license, including but not limited to:
+
+  • Injunctive relief
+  • Monetary damages
+  • Recovery of attorney's fees and court costs
+  • Criminal prosecution under applicable computer fraud laws
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECURITY RESEARCH
+
+Responsible security researchers who discover vulnerabilities are encouraged
+to contact us at: security@dlchat.app
+
+We operate a responsible disclosure program. Do NOT publicly disclose
+vulnerabilities without prior coordination with our security team.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CONTACT
+
+  General:    team@dlchat.app
+  Legal:      legal@dlchat.app
+  Security:   security@dlchat.app
+  Enterprise: enterprise@dlchat.app
+
+  DEATH LEGION Team
+  DL Chat Project
+  https://dlchat.app
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+By downloading, installing, or using the Software, you acknowledge that you
+have read this license, understand it, and agree to be bound by its terms.
+
+© 2025 DEATH LEGION Team. ALL RIGHTS RESERVED.

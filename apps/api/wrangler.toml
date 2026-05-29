@@ -1,0 +1,50 @@
+name = "dl-chat-api"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+account_id = "a3e4ca8900fbfc49d3166c920c6bc750"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "dl-chat-db"
+database_id = "3c9d7d22-4fcd-4e16-bdc6-1506dcab08b8"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "6f12f8f07baf491bb7bb66a67ddad127"
+preview_id = "6f12f8f07baf491bb7bb66a67ddad127"
+
+# R2 - will be added once R2 is enabled in dashboard
+# [[r2_buckets]]
+# binding = "R2"
+# bucket_name = "dl-chat-files"
+
+[ai]
+binding = "AI"
+
+[durable_objects]
+bindings = [
+  { name = "CHAT_ROOM", class_name = "ChatRoom" },
+  { name = "CALL_ROOM", class_name = "CallRoom" },
+  { name = "PRESENCE", class_name = "Presence" }
+]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["ChatRoom", "CallRoom", "Presence"]
+
+[vars]
+JWT_SECRET = "dl-chat-super-secret-jwt-key-death-legion-team-2025-x7k9p2m4n8q1r6s3"
+CORS_ORIGIN = "*"
+APP_NAME = "DL Chat"
+APP_VERSION = "1.0.0"
+TEAM_NAME = "DEATH LEGION Team"
+MAX_FILE_SIZE_IMAGE = "16777216"
+MAX_FILE_SIZE_VIDEO = "2147483648"
+MAX_FILE_SIZE_DOC = "2147483648"
+OTP_EXPIRY_MINUTES = "10"
+SESSION_EXPIRY_DAYS = "30"
+REFRESH_TOKEN_EXPIRY_DAYS = "90"
+RATE_LIMIT_AUTH = "60"
+RATE_LIMIT_API = "1000"
+ADMIN_SECRET = "dl-chat-admin-death-legion-2025"

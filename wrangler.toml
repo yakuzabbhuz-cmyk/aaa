@@ -1,0 +1,47 @@
+name = "dl-chat-api"
+main = "apps/api/src/index.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "dl-chat-db"
+database_id = "placeholder-replace-after-create"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "placeholder-replace-after-create"
+preview_id = "placeholder-replace-after-create"
+
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "dl-chat-files"
+
+[ai]
+binding = "AI"
+
+[durable_objects]
+bindings = [
+  { name = "CHAT_ROOM", class_name = "ChatRoom" },
+  { name = "CALL_ROOM", class_name = "CallRoom" },
+  { name = "PRESENCE", class_name = "Presence" }
+]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["ChatRoom", "CallRoom", "Presence"]
+
+[vars]
+JWT_SECRET = "CHANGE_ME_IN_PRODUCTION_USE_64_CHAR_RANDOM_STRING"
+CORS_ORIGIN = "*"
+APP_NAME = "DL Chat"
+APP_VERSION = "1.0.0"
+TEAM_NAME = "DEATH LEGION Team"
+MAX_FILE_SIZE_IMAGE = "16777216"
+MAX_FILE_SIZE_VIDEO = "2147483648"
+MAX_FILE_SIZE_DOC = "2147483648"
+OTP_EXPIRY_MINUTES = "10"
+SESSION_EXPIRY_DAYS = "30"
+REFRESH_TOKEN_EXPIRY_DAYS = "90"
+RATE_LIMIT_AUTH = "60"
+RATE_LIMIT_API = "1000"

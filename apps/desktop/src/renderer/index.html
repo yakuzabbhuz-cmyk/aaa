@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSP: strict policy for Electron security -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self';
+               script-src 'self' 'unsafe-eval';
+               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+               font-src 'self' https://fonts.gstatic.com data:;
+               img-src 'self' data: blob: https:;
+               media-src 'self' blob: https:;
+               connect-src 'self' https://dl-chat-api.death-legion-dlchat.workers.dev wss://dl-chat-api.death-legion-dlchat.workers.dev https://updates.dlchat.app ws://localhost:* http://localhost:*;
+               worker-src blob:;
+               object-src 'none';"
+    />
+    <title>DL Chat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Critical above-the-fold styles to prevent FOUC */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg-primary: #0d0d0d;
+        --bg-secondary: #151515;
+        --bg-surface: #1a1a1a;
+        --accent: #6c63ff;
+        --accent-hover: #5a52e0;
+        --text-primary: #ffffff;
+        --text-secondary: #a0a0a0;
+        --border: #2a2a2a;
+        --titlebar-height: 38px;
+      }
+      html,
+      body,
+      #root {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      /* Custom titlebar area */
+      #titlebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--titlebar-height);
+        background: var(--bg-secondary);
+        -webkit-app-region: drag;
+        display: flex;
+        align-items: center;
+        z-index: 9999;
+        border-bottom: 1px solid var(--border);
+        user-select: none;
+      }
+      #titlebar-logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 12px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      #titlebar-logo span {
+        color: var(--accent);
+      }
+      #titlebar-controls {
+        margin-left: auto;
+        display: flex;
+        -webkit-app-region: no-drag;
+      }
+      .titlebar-btn {
+        width: 46px;
+        height: var(--titlebar-height);
+        border: none;
+        background: transparent;
+        color: var(--text-secondary);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        transition: background 0.15s;
+      }
+      .titlebar-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text-primary);
+      }
+      .titlebar-btn.close:hover {
+        background: #e53e3e;
+        color: white;
+      }
+      /* Loading spinner */
+      #loading {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-primary);
+        gap: 20px;
+        z-index: 100;
+        transition: opacity 0.3s ease;
+      }
+      #loading.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .loading-logo {
+        width: 72px;
+        height: 72px;
+        background: linear-gradient(135deg, var(--accent), #9f7aea);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        font-weight: 800;
+        color: white;
+        box-shadow: 0 0 40px rgba(108, 99, 255, 0.4);
+        animation: pulse 2s ease-in-out infinite;
+      }
+      @keyframes pulse {
+        0%, 100% { box-shadow: 0 0 40px rgba(108, 99, 255, 0.4); }
+        50% { box-shadow: 0 0 60px rgba(108, 99, 255, 0.7); }
+      }
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(108, 99, 255, 0.2);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      .loading-text {
+        color: var(--text-secondary);
+        font-size: 13px;
+      }
+      /* Main app container */
+      #root {
+        padding-top: var(--titlebar-height);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Custom frameless window titlebar -->
+    <div id="titlebar">
+      <div id="titlebar-logo">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect width="20" height="20" rx="6" fill="#6C63FF"/>
+          <text x="10" y="14" text-anchor="middle" fill="white" font-size="11" font-weight="800" font-family="Inter, sans-serif">DL</text>
+        </svg>
+        <span>DL <span>Chat</span></span>
+      </div>
+      <div id="titlebar-controls">
+        <button class="titlebar-btn" id="btn-minimize" title="Minimize">
+          &#x2212;
+        </button>
+        <button class="titlebar-btn" id="btn-maximize" title="Maximize">
+          &#x25A1;
+        </button>
+        <button class="titlebar-btn close" id="btn-close" title="Close">
+          &#x2715;
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading screen shown until React hydrates -->
+    <div id="loading">
+      <div class="loading-logo">DL</div>
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Starting DL Chat...</p>
+    </div>
+
+    <!-- React root -->
+    <div id="root"></div>
+
+    <!-- Titlebar IPC bindings (before renderer bundle) -->
+    <script>
+      document.getElementById('btn-minimize').addEventListener('click', () => {
+        window.dlchatApi?.window?.minimize();
+      });
+      document.getElementById('btn-maximize').addEventListener('click', () => {
+        window.dlchatApi?.window?.maximize();
+      });
+      document.getElementById('btn-close').addEventListener('click', () => {
+        window.dlchatApi?.window?.close();
+      });
+      // Update maximize button icon when state changes
+      if (window.dlchatApi) {
+        window.dlchatApi.on('window:maximized', () => {
+          document.getElementById('btn-maximize').innerHTML = '&#x2752;';
+          document.getElementById('btn-maximize').title = 'Restore';
+        });
+        window.dlchatApi.on('window:unmaximized', () => {
+          document.getElementById('btn-maximize').innerHTML = '&#x25A1;';
+          document.getElementById('btn-maximize').title = 'Maximize';
+        });
+      }
+    </script>
+  </body>
+</html>

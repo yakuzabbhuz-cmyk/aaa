@@ -1,0 +1,26 @@
+{
+  "name": "@dl-chat/api",
+  "version": "1.0.0",
+  "description": "DL Chat Cloudflare Workers API",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev --local",
+    "build": "wrangler deploy --dry-run",
+    "deploy": "wrangler deploy",
+    "generate-types": "wrangler types",
+    "db:init": "wrangler d1 execute dl-chat-db --file=src/db/schema.sql",
+    "db:migrate": "wrangler d1 migrations apply dl-chat-db",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.4.0",
+    "@hono/zod-validator": "^0.2.2",
+    "zod": "^3.23.0",
+    "@dl-chat/types": "file:../../packages/types"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240718.0",
+    "wrangler": "^3.65.0",
+    "typescript": "^5.5.0"
+  }
+}

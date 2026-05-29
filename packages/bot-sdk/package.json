@@ -1,0 +1,33 @@
+{
+  "name": "@dlchat/bot-sdk",
+  "version": "1.0.0",
+  "description": "DL Chat Bot SDK — Build powerful bots for the DL Chat platform",
+  "license": "SEE LICENSE IN LICENSE",
+  "private": false,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc && node scripts/build-esm.js",
+    "dev": "tsc --watch",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
+  },
+  "keywords": ["dlchat", "bot", "sdk", "chat", "messaging", "death-legion"],
+  "author": "DEATH LEGION Team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/death-legion/dl-chat"
+  },
+  "dependencies": {
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  }
+}

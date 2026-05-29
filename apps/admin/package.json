@@ -1,0 +1,13 @@
+{
+  "name": "@dl-chat/admin",
+  "version": "1.0.0",
+  "description": "DL Chat Admin Dashboard — DEATH LEGION Team — Proprietary",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}

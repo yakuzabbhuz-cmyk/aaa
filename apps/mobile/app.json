@@ -1,0 +1,90 @@
+{
+  "expo": {
+    "name": "DL Chat",
+    "slug": "dl-chat",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0D0D0D"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "android": {
+      "package": "com.deathlegion.dlchat",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#6C63FF"
+      },
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "VIBRATE",
+        "RECEIVE_BOOT_COMPLETED",
+        "USE_BIOMETRIC",
+        "USE_FINGERPRINT",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "FOREGROUND_SERVICE",
+        "RECEIVE_NOTIFICATIONS"
+      ],
+      "googleServicesFile": "./google-services.json"
+    },
+    "ios": {
+      "bundleIdentifier": "com.deathlegion.dlchat",
+      "buildNumber": "1.0.0",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "DL Chat uses camera for video calls and sharing photos",
+        "NSMicrophoneUsageDescription": "DL Chat uses microphone for voice/video calls and voice messages",
+        "NSPhotoLibraryUsageDescription": "DL Chat accesses photos to share media",
+        "NSPhotoLibraryAddUsageDescription": "DL Chat saves photos to your gallery",
+        "NSContactsUsageDescription": "DL Chat accesses contacts to find friends",
+        "NSFaceIDUsageDescription": "DL Chat uses Face ID for secure login",
+        "UIBackgroundModes": ["fetch", "remote-notification", "voip", "audio"]
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-notifications",
+      "expo-secure-store",
+      "expo-local-authentication",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow DL Chat to access your camera"
+        }
+      ],
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow DL Chat to access your microphone"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow DL Chat to access your photos",
+          "cameraPermission": "Allow DL Chat to access your camera"
+        }
+      ]
+    ],
+    "scheme": "dlchat",
+    "extra": {
+      "eas": {
+        "projectId": "your-eas-project-id"
+      },
+      "apiUrl": "https://dl-chat-api.death-legion-dlchat.workers.dev",
+      "wsUrl": "wss://dl-chat-api.death-legion-dlchat.workers.dev/ws"
+    },
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
