@@ -14,10 +14,10 @@ const DEFAULT_VERSIONS = {
     latest: '1.0.0',
     minimum: '1.0.0',
     build: 1,
-    url: 'https://download.dlchat.app/android/dlchat-latest.apk',
+    url: 'https://dl-chat-files.pages.dev/DLChat-1.0.0.apk',
     changelog: 'Initial release of DL Chat for Android.',
     force_update: false,
-    size_bytes: 52428800, // 50 MB
+    size_bytes: 23068672, // ~22 MB
   },
   ios: {
     latest: '1.0.0',
@@ -31,31 +31,39 @@ const DEFAULT_VERSIONS = {
   windows: {
     latest: '1.0.0',
     build: 1,
-    url: 'https://download.dlchat.app/windows/dlchat-setup-1.0.0.exe',
+    url: 'https://dl-chat-files.pages.dev/DLChat-Setup-1.0.0-x64.exe',
     changelog: 'Initial release of DL Chat Desktop for Windows.',
     sha512: '',
-    size_bytes: 78643200, // 75 MB
+    size_bytes: 75497472, // ~72 MB
   },
   macos: {
     latest: '1.0.0',
     build: 1,
-    url: 'https://download.dlchat.app/macos/dlchat-1.0.0.dmg',
-    changelog: 'Initial release of DL Chat Desktop for macOS.',
+    url: 'https://dl-chat-download.pages.dev',
+    changelog: 'Initial release of DL Chat Desktop for macOS. Download from website.',
     sha512: '',
-    size_bytes: 85000000, // ~81 MB
+    size_bytes: 85000000,
   },
   linux: {
     latest: '1.0.0',
     build: 1,
-    url: 'https://download.dlchat.app/linux/dlchat-1.0.0.deb',
+    url: 'https://dl-chat-files.pages.dev/dl-chat_1.0.0_amd64.deb',
     changelog: 'Initial release of DL Chat Desktop for Linux.',
     sha512: '',
-    size_bytes: 72000000, // ~69 MB
+    size_bytes: 90177536, // ~86 MB
+  },
+  linux_portable: {
+    latest: '1.0.0',
+    build: 1,
+    url: 'https://dl-chat-files.pages.dev/dl-chat-linux-x64-1.0.0.zip',
+    changelog: 'Portable ZIP for any Linux x64 distribution.',
+    sha512: '',
+    size_bytes: 215941120, // ~206 MB
   },
   web: {
     latest: '1.0.0',
     build: 1,
-    url: 'https://app.dlchat.app',
+    url: 'https://dl-chat-download.pages.dev',
     changelog: 'Initial release.',
   },
 };
