@@ -61,7 +61,7 @@
 
     <!-- Windows Installer -->
     <div class="col-md-6 col-lg-3">
-      <div class="download-card p-4 h-100" onclick="handleDownload('win-exe', this)">
+      <div class="download-card p-4 h-100" style="opacity:0.65;cursor:default;">
         <div class="platform-icon mb-3" style="background:#1b2030;">
           <i class="bi bi-windows" style="color:#0078d4;font-size:26px;"></i>
         </div>
@@ -70,19 +70,17 @@
         <div class="d-flex align-items-center gap-2 mb-3">
           <span class="badge bg-primary">EXE</span>
           <span class="text-secondary size-badge small">~72 MB</span>
+          <span class="badge bg-warning text-dark ms-auto">Coming Soon</span>
         </div>
-        <a href="DLChat-Setup-1.0.0-x64.exe" download class="btn btn-primary w-100 btn-download" data-file="DLChat-Setup-1.0.0-x64.exe">
-          <i class="bi bi-download me-2"></i>Download EXE
-        </a>
-        <div class="progress-wrap mt-2 d-none" id="prog-win-exe">
-          <div class="progress-fill" style="width:0%"></div>
-        </div>
+        <button class="btn btn-secondary w-100" disabled>
+          <i class="bi bi-clock me-2"></i>Not Yet Available
+        </button>
       </div>
     </div>
 
     <!-- Windows Portable -->
     <div class="col-md-6 col-lg-3">
-      <div class="download-card p-4 h-100" onclick="handleDownload('win-zip', this)">
+      <div class="download-card p-4 h-100" style="opacity:0.65;cursor:default;">
         <div class="platform-icon mb-3" style="background:#1b2030;">
           <i class="bi bi-file-zip" style="color:#e8a60c;font-size:26px;"></i>
         </div>
@@ -91,19 +89,17 @@
         <div class="d-flex align-items-center gap-2 mb-3">
           <span class="badge bg-warning text-dark">ZIP</span>
           <span class="text-secondary size-badge small">~100 MB</span>
+          <span class="badge bg-warning text-dark ms-auto">Coming Soon</span>
         </div>
-        <a href="DLChat-1.0.0-win-x64.zip" download class="btn btn-warning text-dark w-100 btn-download" data-file="DLChat-1.0.0-win-x64.zip">
-          <i class="bi bi-download me-2"></i>Download ZIP
-        </a>
-        <div class="progress-wrap mt-2 d-none" id="prog-win-zip">
-          <div class="progress-fill" style="width:0%"></div>
-        </div>
+        <button class="btn btn-secondary w-100" disabled>
+          <i class="bi bi-clock me-2"></i>Not Yet Available
+        </button>
       </div>
     </div>
 
     <!-- Linux DEB -->
     <div class="col-md-6 col-lg-3">
-      <div class="download-card p-4 h-100" onclick="handleDownload('linux-deb', this)">
+      <div class="download-card p-4 h-100" style="opacity:0.65;cursor:default;">
         <div class="platform-icon mb-3" style="background:#1b2030;">
           <i class="bi bi-ubuntu" style="color:#e95420;font-size:26px;"></i>
         </div>
@@ -112,19 +108,17 @@
         <div class="d-flex align-items-center gap-2 mb-3">
           <span class="badge bg-danger">DEB</span>
           <span class="text-secondary size-badge small">~86 MB</span>
+          <span class="badge bg-warning text-dark ms-auto">Coming Soon</span>
         </div>
-        <a href="dl-chat_1.0.0_amd64.deb" download class="btn btn-danger w-100 btn-download" data-file="dl-chat_1.0.0_amd64.deb">
-          <i class="bi bi-download me-2"></i>Download DEB
-        </a>
-        <div class="progress-wrap mt-2 d-none" id="prog-linux-deb">
-          <div class="progress-fill" style="width:0%"></div>
-        </div>
+        <button class="btn btn-secondary w-100" disabled>
+          <i class="bi bi-clock me-2"></i>Not Yet Available
+        </button>
       </div>
     </div>
 
     <!-- Linux Portable -->
     <div class="col-md-6 col-lg-3">
-      <div class="download-card p-4 h-100" onclick="handleDownload('linux-zip', this)">
+      <div class="download-card p-4 h-100" style="opacity:0.65;cursor:default;">
         <div class="platform-icon mb-3" style="background:#1b2030;">
           <i class="bi bi-terminal" style="color:#3fb950;font-size:26px;"></i>
         </div>
@@ -133,13 +127,11 @@
         <div class="d-flex align-items-center gap-2 mb-3">
           <span class="badge bg-success">ZIP</span>
           <span class="text-secondary size-badge small">~206 MB</span>
+          <span class="badge bg-warning text-dark ms-auto">Coming Soon</span>
         </div>
-        <a href="dl-chat-linux-x64-1.0.0.zip" download class="btn btn-success w-100 btn-download" data-file="dl-chat-linux-x64-1.0.0.zip">
-          <i class="bi bi-download me-2"></i>Download ZIP
-        </a>
-        <div class="progress-wrap mt-2 d-none" id="prog-linux-zip">
-          <div class="progress-fill" style="width:0%"></div>
-        </div>
+        <button class="btn btn-secondary w-100" disabled>
+          <i class="bi bi-clock me-2"></i>Not Yet Available
+        </button>
       </div>
     </div>
 
