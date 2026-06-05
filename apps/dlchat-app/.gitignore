@@ -1,0 +1,4 @@
+node_modules/
+dist-electron/linux-unpacked/
+dist-electron/win-unpacked/
+dist-electron/*.blockmap

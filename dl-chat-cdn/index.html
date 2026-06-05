@@ -61,7 +61,7 @@
 
     <!-- Windows Installer -->
     <div class="col-md-6 col-lg-3">
-      <div class="download-card p-4 h-100" style="opacity:0.65;cursor:default;">
+      <div class="download-card p-4 h-100" onclick="handleDownload('win-exe', this)">
         <div class="platform-icon mb-3" style="background:#1b2030;">
           <i class="bi bi-windows" style="color:#0078d4;font-size:26px;"></i>
         </div>
@@ -69,18 +69,19 @@
         <p class="text-secondary small mb-3">64-bit EXE installer, recommended for most Windows users</p>
         <div class="d-flex align-items-center gap-2 mb-3">
           <span class="badge bg-primary">EXE</span>
-          <span class="text-secondary size-badge small">~72 MB</span>
-          <span class="badge bg-warning text-dark ms-auto">Coming Soon</span>
+          <span class="text-secondary size-badge small">~73 MB</span>
+          <span class="badge bg-success ms-auto">Available</span>
         </div>
-        <button class="btn btn-secondary w-100" disabled>
-          <i class="bi bi-clock me-2"></i>Not Yet Available
-        </button>
+        <div class="progress-wrap mb-2 d-none" id="prog-win-exe"><div class="progress-fill" style="width:0%"></div></div>
+        <a href="DLChat-Setup-1.0.0-win-x64.exe" download class="btn btn-primary w-100 btn-download">
+          <i class="bi bi-download me-2"></i>Download EXE
+        </a>
       </div>
     </div>
 
     <!-- Windows Portable -->
     <div class="col-md-6 col-lg-3">
-      <div class="download-card p-4 h-100" style="opacity:0.65;cursor:default;">
+      <div class="download-card p-4 h-100" onclick="handleDownload('win-zip', this)">
         <div class="platform-icon mb-3" style="background:#1b2030;">
           <i class="bi bi-file-zip" style="color:#e8a60c;font-size:26px;"></i>
         </div>
@@ -89,17 +90,18 @@
         <div class="d-flex align-items-center gap-2 mb-3">
           <span class="badge bg-warning text-dark">ZIP</span>
           <span class="text-secondary size-badge small">~100 MB</span>
-          <span class="badge bg-warning text-dark ms-auto">Coming Soon</span>
+          <span class="badge bg-success ms-auto">Available</span>
         </div>
-        <button class="btn btn-secondary w-100" disabled>
-          <i class="bi bi-clock me-2"></i>Not Yet Available
-        </button>
+        <div class="progress-wrap mb-2 d-none" id="prog-win-zip"><div class="progress-fill" style="width:0%"></div></div>
+        <a href="DLChat-1.0.0-win-x64.zip" download class="btn btn-warning text-dark w-100 btn-download">
+          <i class="bi bi-download me-2"></i>Download ZIP
+        </a>
       </div>
     </div>
 
     <!-- Linux DEB -->
     <div class="col-md-6 col-lg-3">
-      <div class="download-card p-4 h-100" style="opacity:0.65;cursor:default;">
+      <div class="download-card p-4 h-100" onclick="handleDownload('linux-deb', this)">
         <div class="platform-icon mb-3" style="background:#1b2030;">
           <i class="bi bi-ubuntu" style="color:#e95420;font-size:26px;"></i>
         </div>
@@ -107,31 +109,33 @@
         <p class="text-secondary small mb-3">Debian/Ubuntu package, install with dpkg -i or apt</p>
         <div class="d-flex align-items-center gap-2 mb-3">
           <span class="badge bg-danger">DEB</span>
-          <span class="text-secondary size-badge small">~86 MB</span>
-          <span class="badge bg-warning text-dark ms-auto">Coming Soon</span>
+          <span class="text-secondary size-badge small">~72 MB</span>
+          <span class="badge bg-success ms-auto">Available</span>
         </div>
-        <button class="btn btn-secondary w-100" disabled>
-          <i class="bi bi-clock me-2"></i>Not Yet Available
-        </button>
+        <div class="progress-wrap mb-2 d-none" id="prog-linux-deb"><div class="progress-fill" style="width:0%"></div></div>
+        <a href="DLChat-1.0.0-linux-amd64.deb" download class="btn btn-danger w-100 btn-download">
+          <i class="bi bi-download me-2"></i>Download DEB
+        </a>
       </div>
     </div>
 
     <!-- Linux Portable -->
     <div class="col-md-6 col-lg-3">
-      <div class="download-card p-4 h-100" style="opacity:0.65;cursor:default;">
+      <div class="download-card p-4 h-100" onclick="handleDownload('linux-zip', this)">
         <div class="platform-icon mb-3" style="background:#1b2030;">
           <i class="bi bi-terminal" style="color:#3fb950;font-size:26px;"></i>
         </div>
         <h5 class="fw-bold mb-1">Linux Portable</h5>
-        <p class="text-secondary small mb-3">ZIP archive for any Linux x64 distribution, no install</p>
+        <p class="text-secondary small mb-3">ZIP archive for any Linux x64 distribution, no install needed</p>
         <div class="d-flex align-items-center gap-2 mb-3">
           <span class="badge bg-success">ZIP</span>
-          <span class="text-secondary size-badge small">~206 MB</span>
-          <span class="badge bg-warning text-dark ms-auto">Coming Soon</span>
+          <span class="text-secondary size-badge small">~95 MB</span>
+          <span class="badge bg-success ms-auto">Available</span>
         </div>
-        <button class="btn btn-secondary w-100" disabled>
-          <i class="bi bi-clock me-2"></i>Not Yet Available
-        </button>
+        <div class="progress-wrap mb-2 d-none" id="prog-linux-zip"><div class="progress-fill" style="width:0%"></div></div>
+        <a href="DLChat-1.0.0-linux-x64.zip" download class="btn btn-success w-100 btn-download">
+          <i class="bi bi-download me-2"></i>Download ZIP
+        </a>
       </div>
     </div>
 
@@ -166,11 +170,11 @@
       <div class="row g-3">
         <div class="col-md-6">
           <label class="form-label text-secondary small fw-semibold">Windows (PowerShell)</label>
-          <pre class="p-3 rounded small mb-0" style="background:#0d1117;color:#c9d1d9;border:1px solid #21262d;overflow-x:auto;">Get-FileHash .\DLChat-Setup-1.0.0-x64.exe -Algorithm SHA256</pre>
+          <pre class="p-3 rounded small mb-0" style="background:#0d1117;color:#c9d1d9;border:1px solid #21262d;overflow-x:auto;">Get-FileHash .\DLChat-Setup-1.0.0-win-x64.exe -Algorithm SHA256</pre>
         </div>
         <div class="col-md-6">
           <label class="form-label text-secondary small fw-semibold">Linux / macOS</label>
-          <pre class="p-3 rounded small mb-0" style="background:#0d1117;color:#c9d1d9;border:1px solid #21262d;overflow-x:auto;">sha256sum dl-chat_1.0.0_amd64.deb</pre>
+          <pre class="p-3 rounded small mb-0" style="background:#0d1117;color:#c9d1d9;border:1px solid #21262d;overflow-x:auto;">sha256sum DLChat-1.0.0-linux-amd64.deb</pre>
         </div>
       </div>
     </div>
@@ -201,7 +205,7 @@
             <i class="bi bi-ubuntu text-danger fs-4"></i>
             <h6 class="fw-bold mb-0">Linux Install</h6>
           </div>
-          <pre class="p-2 rounded small mb-0" style="background:#0d1117;color:#c9d1d9;border:1px solid #21262d;font-size:12px;">sudo dpkg -i dl-chat_1.0.0_amd64.deb
+          <pre class="p-2 rounded small mb-0" style="background:#0d1117;color:#c9d1d9;border:1px solid #21262d;font-size:12px;">sudo dpkg -i DLChat-1.0.0-linux-amd64.deb
 sudo apt-get install -f
 dl-chat</pre>
         </div>
