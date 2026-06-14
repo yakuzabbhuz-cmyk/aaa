@@ -8,8 +8,9 @@ import { z } from 'zod';
 import type { Env, Variables } from '../types';
 import { generateId } from '../utils/hash';
 import { createAccessToken, createRefreshToken, verifyJwt, generateSessionId } from '../utils/jwt';
-import { registerSchema, verifyOtpSchema, loginSchema } from '../utils/validators';
+import { registerSchema, verifyOtpSchema, loginSchema, registerWithPasswordSchema, loginWithPasswordSchema } from '../utils/validators';
 import { sendOtp, verifyOtp } from '../services/otp';
+import { hashPassword, verifyPassword } from '../utils/password';
 import { authMiddleware } from '../middleware/auth';
 import { authRateLimit } from '../middleware/rateLimit';
 
@@ -55,8 +56,8 @@ auth.post('/register', authRateLimit, zValidator('json', registerSchema), async 
     success: true,
     message: `OTP sent to ${target}`,
     expires_in: 600,
-    // Remove in production:
-    debug_code: result.code,
+    // Only expose debug_code when no real provider is configured (dev/local)
+    ...(result.code && { debug_code: result.code }),
   });
 });
 
@@ -189,7 +190,8 @@ auth.post('/login', authRateLimit, zValidator('json', loginSchema), async (c) =>
     message: `OTP sent to ${target}`,
     requires_2fa: user.two_factor_enabled === 1,
     expires_in: 600,
-    debug_code: result.code, // Remove in production
+    // Only exposed when no real SMS/email provider is configured
+    ...(result.code && { debug_code: result.code }),
   });
 });
 
@@ -351,6 +353,147 @@ auth.post('/passkey/login', authRateLimit, async (c) => {
     refresh_token: refreshToken,
     expires_at: now + expiryDays * 24 * 60 * 60 * 1000,
   });
+});
+
+// ── Email + Password Auth ────────────────────────────────────
+
+// POST /api/v1/auth/register-password
+auth.post('/register-password', authRateLimit, zValidator('json', registerWithPasswordSchema), async (c) => {
+  const body = c.req.valid('json');
+  const now = Date.now();
+
+  const existingEmail = await c.env.DB.prepare('SELECT id FROM users WHERE email = ?').bind(body.email).first();
+  if (existingEmail) throw new HTTPException(409, { message: 'Email already registered' });
+
+  if (body.username) {
+    const existingUser = await c.env.DB.prepare('SELECT id FROM users WHERE username = ?').bind(body.username).first();
+    if (existingUser) throw new HTTPException(409, { message: 'Username already taken' });
+  }
+
+  const userId = generateId();
+  const passwordHash = await hashPassword(body.password);
+
+  await c.env.DB.prepare(
+    `INSERT INTO users (id, email, username, display_name, password_hash, created_at, updated_at, last_seen)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+  ).bind(userId, body.email, body.username || null, body.display_name, passwordHash, now, now, now).run();
+
+  const sessionId = generateSessionId();
+  const expiryDays = parseInt(c.env.SESSION_EXPIRY_DAYS || '30');
+  const refreshExpiryDays = parseInt(c.env.REFRESH_TOKEN_EXPIRY_DAYS || '90');
+  const accessToken = await createAccessToken(userId, sessionId, c.env.JWT_SECRET, expiryDays);
+  const refreshToken = await createRefreshToken(userId, sessionId + '_refresh', c.env.JWT_SECRET, refreshExpiryDays);
+  const sessionExpiresAt = now + expiryDays * 24 * 60 * 60 * 1000;
+
+  await c.env.DB.prepare(
+    `INSERT INTO sessions (id, user_id, token, refresh_token, device_info, ip_address, created_at, expires_at, refresh_expires_at, is_active)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)`
+  ).bind(
+    sessionId, userId, accessToken, refreshToken,
+    null, c.req.header('CF-Connecting-IP') || null,
+    now, sessionExpiresAt, now + refreshExpiryDays * 24 * 60 * 60 * 1000
+  ).run();
+
+  await c.env.KV.put(`session:${sessionId}`, JSON.stringify({ userId, isActive: true }), {
+    expirationTtl: expiryDays * 24 * 60 * 60,
+  });
+
+  const user = await c.env.DB.prepare(
+    `SELECT id, username, phone, email, display_name, bio, avatar_url, status, is_verified, is_premium,
+     is_bot, created_at, updated_at, last_seen FROM users WHERE id = ?`
+  ).bind(userId).first();
+
+  return c.json({ success: true, is_new_user: true, user, token: accessToken, refresh_token: refreshToken, expires_at: sessionExpiresAt }, 201);
+});
+
+// POST /api/v1/auth/login-password
+auth.post('/login-password', authRateLimit, zValidator('json', loginWithPasswordSchema), async (c) => {
+  const body = c.req.valid('json');
+  const now = Date.now();
+
+  const user = await c.env.DB.prepare(
+    'SELECT id, password_hash, is_banned, ban_reason FROM users WHERE email = ?'
+  ).bind(body.email).first<any>();
+
+  if (!user) throw new HTTPException(401, { message: 'Invalid email or password' });
+
+  if (!user.password_hash) {
+    throw new HTTPException(400, { message: 'This account uses phone/OTP login. Please use that method.' });
+  }
+
+  if (user.is_banned) throw new HTTPException(403, { message: `Account banned: ${user.ban_reason}` });
+
+  const isValid = await verifyPassword(body.password, user.password_hash);
+  if (!isValid) throw new HTTPException(401, { message: 'Invalid email or password' });
+
+  const sessionId = generateSessionId();
+  const expiryDays = parseInt(c.env.SESSION_EXPIRY_DAYS || '30');
+  const refreshExpiryDays = parseInt(c.env.REFRESH_TOKEN_EXPIRY_DAYS || '90');
+  const accessToken = await createAccessToken(user.id, sessionId, c.env.JWT_SECRET, expiryDays);
+  const refreshToken = await createRefreshToken(user.id, sessionId + '_refresh', c.env.JWT_SECRET, refreshExpiryDays);
+  const sessionExpiresAt = now + expiryDays * 24 * 60 * 60 * 1000;
+
+  await c.env.DB.prepare(
+    `INSERT INTO sessions (id, user_id, token, refresh_token, device_info, ip_address, created_at, expires_at, refresh_expires_at, is_active)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)`
+  ).bind(
+    sessionId, user.id, accessToken, refreshToken,
+    null, c.req.header('CF-Connecting-IP') || null,
+    now, sessionExpiresAt, now + refreshExpiryDays * 24 * 60 * 60 * 1000
+  ).run();
+
+  await c.env.KV.put(`session:${sessionId}`, JSON.stringify({ userId: user.id, isActive: true }), {
+    expirationTtl: expiryDays * 24 * 60 * 60,
+  });
+
+  await c.env.DB.prepare('UPDATE users SET last_seen = ? WHERE id = ?').bind(now, user.id).run();
+
+  const fullUser = await c.env.DB.prepare(
+    `SELECT id, username, phone, email, display_name, bio, avatar_url, status, is_verified, is_premium,
+     is_bot, created_at, updated_at, last_seen FROM users WHERE id = ?`
+  ).bind(user.id).first();
+
+  return c.json({ success: true, is_new_user: false, user: fullUser, token: accessToken, refresh_token: refreshToken, expires_at: sessionExpiresAt });
+});
+
+// POST /api/v1/auth/forgot-password
+auth.post('/forgot-password', authRateLimit, async (c) => {
+  const body = await c.req.json<{ email: string }>().catch(() => ({ email: '' }));
+  if (!body.email) throw new HTTPException(400, { message: 'Email required' });
+
+  const user = await c.env.DB.prepare('SELECT id FROM users WHERE email = ?').bind(body.email).first<any>();
+  // Always return success to prevent email enumeration
+  if (!user) return c.json({ success: true, message: 'If that email is registered, you will receive a reset code.' });
+
+  const result = await sendOtp(c.env, body.email, 'login');
+  return c.json({
+    success: true,
+    message: 'Password reset code sent to your email.',
+    // Only expose debug_code in non-production environments
+    ...((!c.env.RESEND_API_KEY) && { debug_code: result.code }),
+  });
+});
+
+// POST /api/v1/auth/reset-password
+auth.post('/reset-password', authRateLimit, async (c) => {
+  const body = await c.req.json<{ email: string; code: string; new_password: string }>().catch(() => ({ email: '', code: '', new_password: '' }));
+  if (!body.email || !body.code || !body.new_password) {
+    throw new HTTPException(400, { message: 'email, code, and new_password required' });
+  }
+  if (body.new_password.length < 8) {
+    throw new HTTPException(400, { message: 'Password must be at least 8 characters' });
+  }
+
+  const isValid = await verifyOtp(c.env, body.email, body.code, 'login');
+  if (!isValid) throw new HTTPException(400, { message: 'Invalid or expired code' });
+
+  const passwordHash = await hashPassword(body.new_password);
+  const result = await c.env.DB.prepare(
+    'UPDATE users SET password_hash = ?, updated_at = ? WHERE email = ?'
+  ).bind(passwordHash, Date.now(), body.email).run();
+
+  if (!result.meta?.changes) throw new HTTPException(404, { message: 'User not found' });
+  return c.json({ success: true, message: 'Password updated successfully' });
 });
 
 export default auth;

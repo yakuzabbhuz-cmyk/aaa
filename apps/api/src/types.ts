@@ -40,6 +40,13 @@ export interface Env {
   REFRESH_TOKEN_EXPIRY_DAYS: string;
   RATE_LIMIT_AUTH: string;
   RATE_LIMIT_API: string;
+  // Email provider (Resend.com)
+  RESEND_API_KEY?: string;
+  RESEND_FROM_EMAIL?: string;
+  // SMS provider (Twilio)
+  TWILIO_ACCOUNT_SID?: string;
+  TWILIO_AUTH_TOKEN?: string;
+  TWILIO_PHONE_NUMBER?: string;
 }
 
 export interface AuthUser {

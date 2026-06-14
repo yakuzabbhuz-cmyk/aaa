@@ -10,7 +10,7 @@
   body { background: #0a0b0f; min-height: 100vh; }
   .cdn-hero { background: linear-gradient(135deg, #0d1117 0%, #161b22 100%); border-bottom: 1px solid #21262d; }
   .logo-box { width: 72px; height: 72px; background: linear-gradient(135deg, #5865F2, #7289DA); border-radius: 18px; display: flex; align-items: center; justify-content: center; }
-  .download-card { background: #161b22; border: 1px solid #21262d; border-radius: 12px; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+  .download-card { background: #161b22; border: 1px solid #21262d; border-radius: 12px; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
   .download-card:hover { border-color: #5865F2; transform: translateY(-3px); box-shadow: 0 8px 32px rgba(88, 101, 242, 0.15); }
   .download-card .platform-icon { width: 56px; height: 56px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
   .size-badge { font-family: 'Consolas', monospace; }
@@ -21,7 +21,9 @@
   .footer-link { color: #8b949e; text-decoration: none; }
   .footer-link:hover { color: #c9d1d9; }
   .progress-wrap { height: 4px; border-radius: 2px; overflow: hidden; background: #21262d; }
-  .progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, #5865F2, #7289DA); transition: width 0.3s; }
+  .progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, #5865F2, #7289DA); transition: width 0.4s; }
+  .btn-download { position: relative; overflow: hidden; }
+  .dl-count { font-size: 11px; color: #8b949e; }
 </style>
 </head>
 <body>
@@ -35,7 +37,7 @@
       <span class="badge ms-1" style="background:#21262d;color:#8b949e;font-size:11px;">CDN</span>
     </a>
     <div class="d-flex align-items-center gap-2">
-      <div class="api-dot"></div>
+      <div class="api-dot" id="apiDot"></div>
       <span style="color:#3fb950;font-size:13px;" id="apiStatus">Checking...</span>
     </div>
   </div>
@@ -48,125 +50,170 @@
       <i class="bi bi-cloud-arrow-down-fill text-white" style="font-size:32px;"></i>
     </div>
     <h1 class="fw-bold mb-2">DL Chat Download Center</h1>
-    <p class="text-secondary mb-4">Direct download links — no tracking, no redirects, no ads</p>
-    <span class="badge version-pill text-secondary px-3 py-2">
-      <i class="bi bi-tag me-1"></i>v1.0.0 &nbsp;&middot;&nbsp; Death Legion Team
-    </span>
+    <p class="text-secondary mb-4">Real native apps — bundled DL Chat, connects to live API</p>
+    <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+      <span class="badge version-pill text-secondary px-3 py-2">
+        <i class="bi bi-tag me-1"></i>v1.0.0 &nbsp;&middot;&nbsp; Death Legion Team
+      </span>
+      <span class="badge bg-success px-3 py-2">
+        <i class="bi bi-check-circle me-1"></i>All builds live
+      </span>
+    </div>
   </div>
 </div>
 
 <!-- Download Cards -->
 <div class="container py-5">
-  <div class="row g-4 mb-5" id="downloadGrid">
+  <div class="row g-4 mb-5">
 
     <!-- Windows Installer -->
     <div class="col-md-6 col-lg-3">
-      <div class="download-card p-4 h-100" onclick="handleDownload('win-exe', this)">
+      <div class="download-card p-4 h-100">
         <div class="platform-icon mb-3" style="background:#1b2030;">
           <i class="bi bi-windows" style="color:#0078d4;font-size:26px;"></i>
         </div>
         <h5 class="fw-bold mb-1">Windows Installer</h5>
-        <p class="text-secondary small mb-3">64-bit EXE installer, recommended for most Windows users</p>
-        <div class="d-flex align-items-center gap-2 mb-3">
+        <p class="text-secondary small mb-3">64-bit NSIS installer with Start Menu + Desktop shortcut</p>
+        <div class="d-flex align-items-center gap-2 mb-1">
           <span class="badge bg-primary">EXE</span>
-          <span class="text-secondary size-badge small">~73 MB</span>
-          <span class="badge bg-success ms-auto">Available</span>
+          <span class="text-secondary size-badge small">73 MB</span>
+          <span class="badge bg-success ms-auto">Live</span>
         </div>
-        <div class="progress-wrap mb-2 d-none" id="prog-win-exe"><div class="progress-fill" style="width:0%"></div></div>
-        <a href="DLChat-Setup-1.0.0-win-x64.exe" download class="btn btn-primary w-100 btn-download">
+        <div class="progress-wrap mb-3 d-none" id="prog-winexe"><div class="progress-fill" style="width:0%"></div></div>
+        <a href="https://github.com/yakuzabbhuz-cmyk/aaa/releases/download/v1.0.0/DLChat-Setup-1.0.0-win-x64.exe"
+           class="btn btn-primary w-100 btn-download" id="btn-winexe" onclick="startDownload('winexe')">
           <i class="bi bi-download me-2"></i>Download EXE
         </a>
+        <p class="dl-count mt-2 text-center" id="dlcount-winexe"></p>
       </div>
     </div>
 
     <!-- Windows Portable -->
     <div class="col-md-6 col-lg-3">
-      <div class="download-card p-4 h-100" onclick="handleDownload('win-zip', this)">
+      <div class="download-card p-4 h-100">
         <div class="platform-icon mb-3" style="background:#1b2030;">
           <i class="bi bi-file-zip" style="color:#e8a60c;font-size:26px;"></i>
         </div>
         <h5 class="fw-bold mb-1">Windows Portable</h5>
-        <p class="text-secondary small mb-3">ZIP archive — extract and run, no installation required</p>
-        <div class="d-flex align-items-center gap-2 mb-3">
+        <p class="text-secondary small mb-3">ZIP — extract and run DLChat.exe, no installation needed</p>
+        <div class="d-flex align-items-center gap-2 mb-1">
           <span class="badge bg-warning text-dark">ZIP</span>
-          <span class="text-secondary size-badge small">~100 MB</span>
-          <span class="badge bg-success ms-auto">Available</span>
+          <span class="text-secondary size-badge small">100 MB</span>
+          <span class="badge bg-success ms-auto">Live</span>
         </div>
-        <div class="progress-wrap mb-2 d-none" id="prog-win-zip"><div class="progress-fill" style="width:0%"></div></div>
-        <a href="DLChat-1.0.0-win-x64.zip" download class="btn btn-warning text-dark w-100 btn-download">
+        <div class="progress-wrap mb-3 d-none" id="prog-winzip"><div class="progress-fill" style="width:0%"></div></div>
+        <a href="https://github.com/yakuzabbhuz-cmyk/aaa/releases/download/v1.0.0/DLChat-1.0.0-win-x64.zip"
+           class="btn btn-warning text-dark w-100 btn-download" id="btn-winzip" onclick="startDownload('winzip')">
           <i class="bi bi-download me-2"></i>Download ZIP
         </a>
+        <p class="dl-count mt-2 text-center" id="dlcount-winzip"></p>
       </div>
     </div>
 
     <!-- Linux DEB -->
     <div class="col-md-6 col-lg-3">
-      <div class="download-card p-4 h-100" onclick="handleDownload('linux-deb', this)">
+      <div class="download-card p-4 h-100">
         <div class="platform-icon mb-3" style="background:#1b2030;">
           <i class="bi bi-ubuntu" style="color:#e95420;font-size:26px;"></i>
         </div>
         <h5 class="fw-bold mb-1">Linux DEB Package</h5>
-        <p class="text-secondary small mb-3">Debian/Ubuntu package, install with dpkg -i or apt</p>
-        <div class="d-flex align-items-center gap-2 mb-3">
+        <p class="text-secondary small mb-3">Debian/Ubuntu .deb — installs to /opt, adds app menu entry</p>
+        <div class="d-flex align-items-center gap-2 mb-1">
           <span class="badge bg-danger">DEB</span>
-          <span class="text-secondary size-badge small">~72 MB</span>
-          <span class="badge bg-success ms-auto">Available</span>
+          <span class="text-secondary size-badge small">72 MB</span>
+          <span class="badge bg-success ms-auto">Live</span>
         </div>
-        <div class="progress-wrap mb-2 d-none" id="prog-linux-deb"><div class="progress-fill" style="width:0%"></div></div>
-        <a href="DLChat-1.0.0-linux-amd64.deb" download class="btn btn-danger w-100 btn-download">
+        <div class="progress-wrap mb-3 d-none" id="prog-lindeb"><div class="progress-fill" style="width:0%"></div></div>
+        <a href="https://github.com/yakuzabbhuz-cmyk/aaa/releases/download/v1.0.0/DLChat-1.0.0-linux-amd64.deb"
+           class="btn btn-danger w-100 btn-download" id="btn-lindeb" onclick="startDownload('lindeb')">
           <i class="bi bi-download me-2"></i>Download DEB
         </a>
+        <p class="dl-count mt-2 text-center" id="dlcount-lindeb"></p>
       </div>
     </div>
 
     <!-- Linux Portable -->
     <div class="col-md-6 col-lg-3">
-      <div class="download-card p-4 h-100" onclick="handleDownload('linux-zip', this)">
+      <div class="download-card p-4 h-100">
         <div class="platform-icon mb-3" style="background:#1b2030;">
           <i class="bi bi-terminal" style="color:#3fb950;font-size:26px;"></i>
         </div>
         <h5 class="fw-bold mb-1">Linux Portable</h5>
-        <p class="text-secondary small mb-3">ZIP archive for any Linux x64 distribution, no install needed</p>
-        <div class="d-flex align-items-center gap-2 mb-3">
+        <p class="text-secondary small mb-3">ZIP for any Linux x64 distro — extract and run dl-chat-app</p>
+        <div class="d-flex align-items-center gap-2 mb-1">
           <span class="badge bg-success">ZIP</span>
-          <span class="text-secondary size-badge small">~95 MB</span>
-          <span class="badge bg-success ms-auto">Available</span>
+          <span class="text-secondary size-badge small">95 MB</span>
+          <span class="badge bg-success ms-auto">Live</span>
         </div>
-        <div class="progress-wrap mb-2 d-none" id="prog-linux-zip"><div class="progress-fill" style="width:0%"></div></div>
-        <a href="DLChat-1.0.0-linux-x64.zip" download class="btn btn-success w-100 btn-download">
+        <div class="progress-wrap mb-3 d-none" id="prog-linzip"><div class="progress-fill" style="width:0%"></div></div>
+        <a href="https://github.com/yakuzabbhuz-cmyk/aaa/releases/download/v1.0.0/DLChat-1.0.0-linux-x64.zip"
+           class="btn btn-success w-100 btn-download" id="btn-linzip" onclick="startDownload('linzip')">
           <i class="bi bi-download me-2"></i>Download ZIP
         </a>
+        <p class="dl-count mt-2 text-center" id="dlcount-linzip"></p>
       </div>
     </div>
 
     <!-- Android APK -->
     <div class="col-md-6 col-lg-3">
-      <div class="download-card p-4 h-100" id="apkCard" onclick="handleDownload('android', this)">
+      <div class="download-card p-4 h-100">
         <div class="platform-icon mb-3" style="background:#1b2030;">
           <i class="bi bi-android2" style="color:#3ddc84;font-size:26px;"></i>
         </div>
         <h5 class="fw-bold mb-1">Android APK</h5>
-        <p class="text-secondary small mb-3">Direct APK install for Android 7.0+, enable unknown sources</p>
-        <div class="d-flex align-items-center gap-2 mb-3">
-          <span class="badge bg-secondary" id="apkBadge">APK</span>
-          <span class="text-secondary size-badge small" id="apkSize">Checking...</span>
+        <p class="text-secondary small mb-3">Android 7.0+ (API 24) — bundled app, no internet needed for UI</p>
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <span class="badge bg-secondary" style="background:#3ddc84!important;color:#000;">APK</span>
+          <span class="text-secondary size-badge small">4.6 MB</span>
+          <span class="badge bg-success ms-auto">Live</span>
         </div>
-        <a href="DLChat-1.0.0.apk" download id="apkBtn" class="btn btn-secondary w-100 btn-download" data-file="DLChat-1.0.0.apk" disabled>
-          <i class="bi bi-hourglass-split me-2" id="apkIcon"></i><span id="apkLabel">Checking availability</span>
+        <div class="progress-wrap mb-3 d-none" id="prog-apk"><div class="progress-fill" style="width:0%"></div></div>
+        <a href="https://dl-chat-files.pages.dev/DLChat-1.0.0.apk"
+           class="btn w-100 btn-download" id="btn-apk"
+           style="background:#3ddc84;color:#000;font-weight:600;" onclick="startDownload('apk')">
+          <i class="bi bi-download me-2"></i>Download APK
         </a>
+        <p class="dl-count mt-2 text-center" id="dlcount-apk"></p>
       </div>
     </div>
 
+  </div>
+
+  <!-- Release info bar -->
+  <div class="card mb-5" style="background:#161b22;border-color:#21262d;">
+    <div class="card-body py-3">
+      <div class="row align-items-center text-center">
+        <div class="col-md-3 mb-2 mb-md-0">
+          <div class="text-secondary small">Release</div>
+          <div class="fw-bold">v1.0.0</div>
+        </div>
+        <div class="col-md-3 mb-2 mb-md-0">
+          <div class="text-secondary small">Electron</div>
+          <div class="fw-bold">28.3.3</div>
+        </div>
+        <div class="col-md-3 mb-2 mb-md-0">
+          <div class="text-secondary small">Android Min SDK</div>
+          <div class="fw-bold">API 24 (Android 7.0)</div>
+        </div>
+        <div class="col-md-3">
+          <div class="text-secondary small">Source</div>
+          <a href="https://github.com/yakuzabbhuz-cmyk/aaa/releases/tag/v1.0.0" target="_blank"
+             class="fw-bold text-primary" style="text-decoration:none;">
+            <i class="bi bi-github me-1"></i>GitHub Release
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Hash verification block -->
   <div class="card mb-5" style="background:#161b22;border-color:#21262d;">
     <div class="card-header d-flex align-items-center gap-2" style="background:#0d1117;border-color:#21262d;">
       <i class="bi bi-shield-check text-success"></i>
-      <span class="fw-semibold">File Integrity</span>
+      <span class="fw-semibold">File Integrity Verification</span>
     </div>
     <div class="card-body">
-      <p class="text-secondary small mb-3">Verify your download integrity before installing. Run the following commands to check SHA-256 hashes:</p>
+      <p class="text-secondary small mb-3">Verify your download after it completes:</p>
       <div class="row g-3">
         <div class="col-md-6">
           <label class="form-label text-secondary small fw-semibold">Windows (PowerShell)</label>
@@ -190,9 +237,9 @@
             <h6 class="fw-bold mb-0">Windows Install</h6>
           </div>
           <ol class="text-secondary small ps-3 mb-0">
-            <li class="mb-1">Download the EXE installer</li>
-            <li class="mb-1">Run as Administrator</li>
-            <li class="mb-1">Follow the setup wizard</li>
+            <li class="mb-1">Download EXE installer</li>
+            <li class="mb-1">Double-click to run</li>
+            <li class="mb-1">Follow setup wizard</li>
             <li>Launch DL Chat from Start Menu</li>
           </ol>
         </div>
@@ -220,9 +267,9 @@ dl-chat</pre>
           </div>
           <ol class="text-secondary small ps-3 mb-0">
             <li class="mb-1">Download the APK file</li>
-            <li class="mb-1">Enable "Install unknown apps" in Settings</li>
-            <li class="mb-1">Open the downloaded APK</li>
-            <li>Tap Install and allow permissions</li>
+            <li class="mb-1">Settings → Security → Unknown Sources ✓</li>
+            <li class="mb-1">Open downloaded APK</li>
+            <li>Tap Install</li>
           </ol>
         </div>
       </div>
@@ -232,7 +279,10 @@ dl-chat</pre>
   <!-- Links row -->
   <div class="text-center">
     <a href="https://dl-chat-download.pages.dev" class="btn btn-outline-secondary me-2">
-      <i class="bi bi-arrow-left me-1"></i>Back to main site
+      <i class="bi bi-arrow-left me-1"></i>Main Site
+    </a>
+    <a href="https://github.com/yakuzabbhuz-cmyk/aaa/releases/tag/v1.0.0" target="_blank" class="btn btn-outline-secondary me-2">
+      <i class="bi bi-github me-1"></i>GitHub Release
     </a>
     <a href="https://dl-chat-api.death-legion-dlchat.workers.dev/health" target="_blank" class="btn btn-outline-secondary me-2">
       <i class="bi bi-activity me-1"></i>API Status
@@ -251,6 +301,7 @@ dl-chat</pre>
     </p>
     <p class="small">
       <a href="https://dl-chat-download.pages.dev" class="footer-link me-3">Main Site</a>
+      <a href="https://github.com/yakuzabbhuz-cmyk/aaa/releases" class="footer-link me-3">All Releases</a>
       <a href="https://dl-chat-api.death-legion-dlchat.workers.dev/health" class="footer-link me-3">API</a>
       <a href="https://dl-chat-admin.pages.dev" class="footer-link">Admin</a>
     </p>
@@ -259,110 +310,59 @@ dl-chat</pre>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// ─── Sound Engine ─────────────────────────────────────────────────────────────
+// ─── Sound Engine ──────────────────────────────────────────────────────────────
 let _ac = null;
 function ac() {
   if (!_ac) _ac = new (window.AudioContext || window.webkitAudioContext)();
   if (_ac.state === 'suspended') _ac.resume();
   return _ac;
 }
-
 function sndClick() {
   try {
     const ctx = ac(), t = ctx.currentTime;
-    const g = ctx.createGain();
-    g.connect(ctx.destination);
-    g.gain.setValueAtTime(0.18, t);
-    g.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
-    const o = ctx.createOscillator();
-    o.type = 'square';
-    o.frequency.setValueAtTime(600, t);
-    o.frequency.exponentialRampToValueAtTime(400, t + 0.07);
-    o.connect(g);
-    o.start(t); o.stop(t + 0.07);
+    const g = ctx.createGain(); g.connect(ctx.destination);
+    g.gain.setValueAtTime(0.18, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.07);
+    const o = ctx.createOscillator(); o.type = 'square';
+    o.frequency.setValueAtTime(600, t); o.frequency.exponentialRampToValueAtTime(400, t + 0.07);
+    o.connect(g); o.start(t); o.stop(t + 0.07);
   } catch(e){}
 }
-
 function sndDownload() {
   try {
     const ctx = ac();
     [440, 550, 660, 880].forEach((f, i) => {
       const t = ctx.currentTime + i * 0.1;
-      const g = ctx.createGain();
-      g.connect(ctx.destination);
-      g.gain.setValueAtTime(0.22, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
-      const o = ctx.createOscillator();
-      o.type = 'triangle';
+      const g = ctx.createGain(); g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.22, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+      const o = ctx.createOscillator(); o.type = 'triangle';
       o.frequency.setValueAtTime(f, t);
-      o.connect(g);
-      o.start(t); o.stop(t + 0.18);
+      o.connect(g); o.start(t); o.stop(t + 0.18);
     });
   } catch(e){}
 }
-
 function sndSuccess() {
   try {
     const ctx = ac();
     [523, 659, 784, 1047].forEach((f, i) => {
       const t = ctx.currentTime + i * 0.12;
-      const g = ctx.createGain();
-      g.connect(ctx.destination);
-      g.gain.setValueAtTime(0.2, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
-      const o = ctx.createOscillator();
-      o.type = 'sine';
+      const g = ctx.createGain(); g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.2, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+      const o = ctx.createOscillator(); o.type = 'sine';
       o.frequency.setValueAtTime(f, t);
-      o.connect(g);
-      o.start(t); o.stop(t + 0.2);
+      o.connect(g); o.start(t); o.stop(t + 0.2);
     });
   } catch(e){}
 }
 
-function sndError() {
-  try {
-    const ctx = ac(), t = ctx.currentTime;
-    const g = ctx.createGain();
-    g.connect(ctx.destination);
-    g.gain.setValueAtTime(0.25, t);
-    g.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
-    const o = ctx.createOscillator();
-    o.type = 'sawtooth';
-    o.frequency.setValueAtTime(320, t);
-    o.frequency.exponentialRampToValueAtTime(180, t + 0.35);
-    o.connect(g);
-    o.start(t); o.stop(t + 0.35);
-  } catch(e){}
-}
-
-function sndWhoosh() {
-  try {
-    const ctx = ac(), t = ctx.currentTime;
-    const buf = ctx.createBuffer(1, ctx.sampleRate * 0.3, ctx.sampleRate);
-    const data = buf.getChannelData(0);
-    for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
-    const src = ctx.createBufferSource();
-    src.buffer = buf;
-    const f = ctx.createBiquadFilter();
-    f.type = 'bandpass';
-    f.frequency.setValueAtTime(200, t);
-    f.frequency.exponentialRampToValueAtTime(3000, t + 0.3);
-    f.Q.value = 1.5;
-    const g = ctx.createGain();
-    g.gain.setValueAtTime(0.4, t);
-    g.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
-    src.connect(f); f.connect(g); g.connect(ctx.destination);
-    src.start(t); src.stop(t + 0.3);
-  } catch(e){}
-}
-
-// ─── API Status Check ──────────────────────────────────────────────────────────
+// ─── API Status ────────────────────────────────────────────────────────────────
 async function checkApiStatus() {
   try {
-    const r = await fetch('https://dl-chat-api.death-legion-dlchat.workers.dev/health', { signal: AbortSignal.timeout(5000) });
+    const r = await fetch('https://dl-chat-api.death-legion-dlchat.workers.dev/health',
+      { signal: AbortSignal.timeout(5000) });
     const el = document.getElementById('apiStatus');
-    const dot = document.querySelector('.api-dot');
+    const dot = document.getElementById('apiDot');
     if (r.ok) {
+      const data = await r.json().catch(() => ({}));
       el.textContent = 'API Online';
       el.style.color = '#3fb950';
       dot.style.background = '#3fb950';
@@ -375,77 +375,67 @@ async function checkApiStatus() {
     const el = document.getElementById('apiStatus');
     el.textContent = 'API Offline';
     el.style.color = '#f85149';
-    document.querySelector('.api-dot').style.background = '#f85149';
+    document.getElementById('apiDot').style.background = '#f85149';
   }
 }
 
-// ─── APK Availability Check ────────────────────────────────────────────────────
-async function checkApk() {
+// ─── GitHub Release download count (live from GitHub API) ─────────────────────
+async function fetchDownloadCounts() {
   try {
-    const r = await fetch('DLChat-1.0.0.apk', { method: 'HEAD', signal: AbortSignal.timeout(8000) });
-    const btn = document.getElementById('apkBtn');
-    const lbl = document.getElementById('apkLabel');
-    const ico = document.getElementById('apkIcon');
-    const sz  = document.getElementById('apkSize');
-    const bdg = document.getElementById('apkBadge');
-    if (r.ok) {
-      btn.removeAttribute('disabled');
-      btn.className = 'btn btn-success w-100 btn-download';
-      lbl.textContent = 'Download APK';
-      ico.className = 'bi bi-download me-2';
-      bdg.className = 'badge bg-success';
-      const cl = r.headers.get('content-length');
-      sz.textContent = cl ? `~${Math.round(+cl/1048576)} MB` : '~Available';
-      sndSuccess();
-    } else {
-      lbl.textContent = 'Coming Soon';
-      sz.textContent = 'Not yet available';
-    }
-  } catch {
-    document.getElementById('apkLabel').textContent = 'Coming Soon';
-    document.getElementById('apkSize').textContent = 'Not yet available';
-  }
+    const r = await fetch(
+      'https://api.github.com/repos/yakuzabbhuz-cmyk/aaa/releases/tags/v1.0.0',
+      { headers: { 'Accept': 'application/vnd.github.v3+json' },
+        signal: AbortSignal.timeout(8000) }
+    );
+    if (!r.ok) return;
+    const data = await r.json();
+    const map = { 'DLChat-Setup-1.0.0-win-x64.exe': 'winexe',
+                  'DLChat-1.0.0-win-x64.zip': 'winzip',
+                  'DLChat-1.0.0-linux-amd64.deb': 'lindeb',
+                  'DLChat-1.0.0-linux-x64.zip': 'linzip',
+                  'DLChat-1.0.0.apk': 'apk' };
+    (data.assets || []).forEach(a => {
+      const key = map[a.name];
+      if (key && a.download_count > 0) {
+        const el = document.getElementById('dlcount-' + key);
+        if (el) el.textContent = a.download_count.toLocaleString() + ' downloads';
+      }
+    });
+  } catch(e) {}
 }
 
-// ─── Download Handler ──────────────────────────────────────────────────────────
-function handleDownload(id, card) {
+// ─── Download handler with progress animation ──────────────────────────────────
+function startDownload(key) {
   sndDownload();
-  const prog = document.getElementById('prog-' + id);
+  const prog = document.getElementById('prog-' + key);
   if (prog) {
     prog.classList.remove('d-none');
     const fill = prog.querySelector('.progress-fill');
     let w = 0;
     const iv = setInterval(() => {
-      w = Math.min(w + Math.random() * 12, 95);
+      w = Math.min(w + Math.random() * 8 + 2, 90);
       fill.style.width = w + '%';
-      if (w >= 95) {
+      if (w >= 90) {
         clearInterval(iv);
+        fill.style.width = '100%';
         setTimeout(() => {
-          fill.style.width = '100%';
-          setTimeout(() => prog.classList.add('d-none'), 1200);
+          prog.classList.add('d-none');
+          fill.style.width = '0%';
           sndSuccess();
-        }, 500);
+          // Refresh download counts after a short delay
+          setTimeout(fetchDownloadCounts, 2000);
+        }, 600);
       }
-    }, 200);
+    }, 150);
   }
 }
 
-// Button click sounds
+// ─── Init ──────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.btn-download').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      sndClick();
-    });
-  });
-
-  document.querySelectorAll('.download-card').forEach(card => {
-    card.addEventListener('mouseenter', () => sndWhoosh());
-  });
-
   checkApiStatus();
-  checkApk();
-  setInterval(checkApk, 30000);
+  fetchDownloadCounts();
   setInterval(checkApiStatus, 60000);
+  setInterval(fetchDownloadCounts, 300000); // refresh counts every 5 min
 });
 </script>
 </body>

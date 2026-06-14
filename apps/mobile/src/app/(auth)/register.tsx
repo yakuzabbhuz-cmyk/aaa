@@ -1,6 +1,6 @@
 // ============================================
 // DL Chat Mobile - Register Screen
-// New user registration with phone number
+// New user registration: Email+Password OR Phone OTP
 // ============================================
 import React, { useState, useRef } from 'react';
 import {
@@ -20,6 +20,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { COLORS } from '../../constants/theme';
 import { apiClient } from '../../api/client';
+import { useAuthStore } from '../../store/auth';
 
 // Country codes (subset)
 const COUNTRIES = [
@@ -40,6 +41,10 @@ const COUNTRIES = [
 ];
 
 export default function RegisterScreen() {
+  // Registration method
+  const [method, setMethod] = useState<'email' | 'phone'>('email');
+
+  // Phone OTP state
   const [step, setStep] = useState<'phone' | 'profile'>('phone');
   const [selectedCountry, setSelectedCountry] = useState(COUNTRIES[0]);
   const [phone, setPhone] = useState('');
@@ -50,6 +55,14 @@ export default function RegisterScreen() {
   const [loading, setLoading] = useState(false);
   const [countrySearch, setCountrySearch] = useState('');
 
+  // Email+Password state
+  const [emailAddr, setEmailAddr] = useState('');
+  const [emailPassword, setEmailPassword] = useState('');
+  const [emailName, setEmailName] = useState('');
+  const [emailUsername, setEmailUsername] = useState('');
+  const [showEmailPassword, setShowEmailPassword] = useState(false);
+
+  const { login } = useAuthStore();
   const phoneRef = useRef<TextInput>(null);
   const nameRef = useRef<TextInput>(null);
 
@@ -58,6 +71,40 @@ export default function RegisterScreen() {
       c.name.toLowerCase().includes(countrySearch.toLowerCase()) ||
       c.dial.includes(countrySearch)
   );
+
+  async function handleEmailRegister() {
+    if (!emailName.trim() || emailName.trim().length < 2) {
+      Alert.alert('Error', 'Please enter your display name (min 2 characters).');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailAddr.trim())) {
+      Alert.alert('Error', 'Please enter a valid email address.');
+      return;
+    }
+    if (emailPassword.length < 8) {
+      Alert.alert('Error', 'Password must be at least 8 characters.');
+      return;
+    }
+    setLoading(true);
+    try {
+      const result = await apiClient.registerWithPassword({
+        email: emailAddr.trim().toLowerCase(),
+        password: emailPassword,
+        display_name: emailName.trim(),
+        username: emailUsername.trim() || undefined,
+      });
+      await login(result.user, result.token, result.refresh_token);
+      router.replace('/(main)/chats');
+    } catch (e: any) {
+      if (e.status === 409) {
+        Alert.alert('Already Registered', e.message || 'This email or username is already taken.');
+      } else {
+        Alert.alert('Error', e.message || 'Registration failed. Please try again.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
 
   async function handleSendOtp() {
     if (!phone.trim() || phone.length < 7) {
@@ -160,7 +207,110 @@ export default function RegisterScreen() {
             <Text style={styles.tagline}>Join DEATH LEGION Team's DL Chat</Text>
           </View>
 
-          {/* Phone Form */}
+          {/* Method Tabs */}
+          <View style={styles.tabs}>
+            <TouchableOpacity
+              style={[styles.tab, method === 'email' && styles.tabActive]}
+              onPress={() => setMethod('email')}
+            >
+              <Text style={[styles.tabText, method === 'email' && styles.tabTextActive]}>📧 Email</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.tab, method === 'phone' && styles.tabActive]}
+              onPress={() => setMethod('phone')}
+            >
+              <Text style={[styles.tabText, method === 'phone' && styles.tabTextActive]}>📱 Phone</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* ─── Email+Password Registration Form ─── */}
+          {method === 'email' && (
+            <View style={styles.form}>
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Display Name *</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Your full name"
+                  placeholderTextColor="#555"
+                  value={emailName}
+                  onChangeText={setEmailName}
+                  autoCapitalize="words"
+                />
+              </View>
+
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Username (optional)</Text>
+                <View style={styles.usernameContainer}>
+                  <Text style={styles.usernamePrefix}>@</Text>
+                  <TextInput
+                    style={[styles.input, styles.usernameInput]}
+                    placeholder="your_username"
+                    placeholderTextColor="#555"
+                    value={emailUsername}
+                    onChangeText={(t) => setEmailUsername(t.toLowerCase().replace(/[^a-z0-9_]/g, ''))}
+                    autoCapitalize="none"
+                  />
+                </View>
+              </View>
+
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Email Address *</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="you@example.com"
+                  placeholderTextColor="#555"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  value={emailAddr}
+                  onChangeText={setEmailAddr}
+                />
+              </View>
+
+              <View style={styles.inputGroup}>
+                <Text style={styles.label}>Password *</Text>
+                <View style={styles.passwordRow}>
+                  <TextInput
+                    style={styles.passwordInput}
+                    placeholder="Minimum 8 characters"
+                    placeholderTextColor="#555"
+                    secureTextEntry={!showEmailPassword}
+                    value={emailPassword}
+                    onChangeText={setEmailPassword}
+                  />
+                  <TouchableOpacity onPress={() => setShowEmailPassword(v => !v)} style={styles.eyeBtn}>
+                    <Text style={{ fontSize: 16 }}>{showEmailPassword ? '🙈' : '👁️'}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <Text style={styles.terms}>
+                By continuing, you agree to DL Chat's{' '}
+                <Text style={styles.link}>Terms of Service</Text> and{' '}
+                <Text style={styles.link}>Privacy Policy</Text>.
+              </Text>
+
+              <TouchableOpacity
+                style={[styles.continueBtn, loading && styles.continueBtnDisabled]}
+                onPress={handleEmailRegister}
+                disabled={loading}
+              >
+                {loading
+                  ? <ActivityIndicator color="#fff" size="small" />
+                  : <Text style={styles.continueBtnText}>Create Account →</Text>
+                }
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => router.push('/(auth)/login')}>
+                <Text style={styles.loginLink}>
+                  Already have an account? <Text style={styles.link}>Sign In</Text>
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
+          {/* ─── Phone OTP Registration Form ─── */}
+          {method === 'phone' && (
           <View style={styles.form}>
             {/* Name field */}
             <View style={styles.inputGroup}>
@@ -268,6 +418,7 @@ export default function RegisterScreen() {
               </Text>
             </TouchableOpacity>
           </View>
+          )} {/* end method === 'phone' */}
 
           {/* Security badge */}
           <View style={styles.securityBadge}>
@@ -498,4 +649,40 @@ const styles = StyleSheet.create({
   countryName: { color: '#fff', fontSize: 15, flex: 1 },
   countryDial: { color: '#6c63ff', fontSize: 14, fontWeight: '600' },
   checkmark: { color: '#6c63ff', fontSize: 16, fontWeight: '700' },
+  // Method tabs
+  tabs: {
+    flexDirection: 'row',
+    backgroundColor: '#1A1A2E',
+    borderRadius: 12,
+    padding: 4,
+    marginBottom: 24,
+    gap: 0,
+  },
+  tab: {
+    flex: 1,
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  tabActive: { backgroundColor: '#6c63ff' },
+  tabText: { color: '#888', fontSize: 14, fontWeight: '600' },
+  tabTextActive: { color: '#fff' },
+  // Password row
+  passwordRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1a1a1a',
+    borderWidth: 1,
+    borderColor: '#2a2a2a',
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  passwordInput: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    color: '#fff',
+    fontSize: 16,
+  },
+  eyeBtn: { paddingHorizontal: 14, paddingVertical: 14 },
 });

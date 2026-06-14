@@ -202,3 +202,16 @@ export const scheduleMessageSchema = z.object({
   ...sendMessageSchema.shape,
   scheduled_at: z.number().min(Date.now() / 1000 + 60),
 });
+
+// ── Email+Password Auth Schemas ──────────────────────────────
+export const registerWithPasswordSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters').max(128, 'Password too long'),
+  display_name: z.string().min(2, 'Display name too short').max(50, 'Display name too long'),
+  username: z.string().min(3).max(30).regex(/^[a-z0-9_]+$/, 'Username: lowercase letters, numbers, underscores only').optional(),
+});
+
+export const loginWithPasswordSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(1, 'Password required'),
+});

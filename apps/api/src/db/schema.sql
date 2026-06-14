@@ -45,7 +45,8 @@ CREATE TABLE IF NOT EXISTS users (
   two_factor_enabled INTEGER DEFAULT 0,
   two_factor_secret TEXT,
   public_key TEXT,
-  passkey_credential TEXT
+  passkey_credential TEXT,
+  password_hash TEXT
 );
 
 CREATE TABLE IF NOT EXISTS sessions (

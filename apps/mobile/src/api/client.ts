@@ -82,6 +82,40 @@ class ApiClient {
     });
   }
 
+  // ── Email + Password Auth ─────────────────────────────────
+  async loginWithPassword(data: { email: string; password: string }) {
+    return this.request<{
+      user: any; token: string; refresh_token: string; expires_at: number; is_new_user: boolean;
+    }>('/api/v1/auth/login-password', { method: 'POST', body: JSON.stringify(data) });
+  }
+
+  async registerWithPassword(data: { email: string; password: string; display_name: string; username?: string }) {
+    return this.request<{
+      user: any; token: string; refresh_token: string; expires_at: number; is_new_user: boolean;
+    }>('/api/v1/auth/register-password', { method: 'POST', body: JSON.stringify(data) });
+  }
+
+  async forgotPassword(email: string) {
+    return this.request<{ success: boolean; message: string; debug_code?: string }>(
+      '/api/v1/auth/forgot-password',
+      { method: 'POST', body: JSON.stringify({ email }) }
+    );
+  }
+
+  async resetPassword(data: { email: string; code: string; new_password: string }) {
+    return this.request<{ success: boolean; message: string }>(
+      '/api/v1/auth/reset-password',
+      { method: 'POST', body: JSON.stringify(data) }
+    );
+  }
+
+  async sendOtp(phone: string) {
+    return this.request<{ success: boolean; message: string; debug_code?: string }>(
+      '/api/v1/auth/register',
+      { method: 'POST', body: JSON.stringify({ phone, display_name: 'User' }) }
+    );
+  }
+
   async logout() {
     return this.request<{ success: boolean }>('/api/v1/auth/logout', { method: 'POST' });
   }
@@ -349,4 +383,5 @@ export class ApiError extends Error {
 }
 
 export const api = new ApiClient(API_URL);
+export const apiClient = api; // alias for legacy imports
 export default api;
